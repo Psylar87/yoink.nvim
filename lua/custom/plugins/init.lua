@@ -27,6 +27,7 @@ return {
     version = '*',
   },
   {
+    -- "gc" to comment visual regions/lines
     'numToStr/Comment.nvim',
     opts = {
       -- add any options here
@@ -34,6 +35,20 @@ return {
     lazy = false,
     config = function()
       require('Comment').setup() -- Needed to set default mappings
+    end,
+  },
+  -- Themes
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        integrations = {
+          barbar = true,
+        },
+      }
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 }
