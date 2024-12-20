@@ -10,6 +10,7 @@ return {
     config = true,
     -- use opts = {} for passing setup options
     -- this is equalent to setup({}) function
+    --:
   },
   {
     'nvim-tree/nvim-tree.lua',
@@ -49,6 +50,14 @@ return {
         },
       }
       vim.cmd.colorscheme 'catppuccin'
+    end,
+  },
+  {
+    'github/copilot.vim',
+    config = function()
+      -- Control + J to accept completion
+      vim.cmd [[imap <silent><script><expr> <C-j> copilot#Accept("\<CR>")]]
+      vim.g.copilot_no_tab_map = true
     end,
   },
 }
