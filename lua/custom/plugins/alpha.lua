@@ -24,6 +24,7 @@ return {
       dashboard.button('C n', '  > Toggle file explorer', '<cmd>NvimTreeToggle<CR>'),
       dashboard.button('SPC sf', '󰱼  > Find File', '<cmd>Telescope find_files<CR>'),
       dashboard.button('SPC sn', '⚙︎ > Search Nvim Config', '<cmd>Telescope find_files cwd=~/.config/nvim<CR>'),
+      dashboard.button('A t', '💻 > Toggle Terminal', '<cmd>split term://$SHELL<CR>'),
       dashboard.button('q', '  > Quit NVIM', '<cmd>qa<CR>'),
     }
 
