@@ -1,5 +1,9 @@
 local map = vim.keymap.set
 
+-- Run lua for current file
+-- TODO: Add a window to display the output of the luafile command and display any errors
+map('n', '<A-l>', '<cmd>luafile %<CR>', { desc = 'Run lua for current file' })
+
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
