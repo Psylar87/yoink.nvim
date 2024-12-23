@@ -1,5 +1,5 @@
 # Yoink.nvim (Multi-File Edition)
-![Yoink](Yoink.nvim.png)
+![Yoink](yoink.nvim.png)
 ## "Professionally acquired configurations"
 
 A fun fork of [kickstart.nvim by MillerApps](https://github.com/MillerApps/kickstart.nvim).
