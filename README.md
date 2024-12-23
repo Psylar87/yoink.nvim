@@ -98,19 +98,16 @@ return {
 }
 ```
 
-> [!FAQ]
-
-> Q: I already have a Neovim config. What do I do?**
-> A: Back up your existing config, then remove it:
+ Q: I already have a Neovim config. What do I do?**
+ A: Back up your existing config, then remove it:
 
 ```sh 
 mv ~/.config/nvim ~/.config/nvim.old
 rm -rf ~/.local/share/nvim/
 ``````
-> [!FAQ]
 
-> Q: Can I use multiple Neovim configs?
-> A: Yes! Set `$NVIM_APPNAME`. For example:
+ Q: Can I use multiple Neovim configs?
+ A: Yes! Set `$NVIM_APPNAME`. For example:
 
 # Install this config in `~/.config/nvim-Yoink`
 # Then create an alias:
@@ -120,13 +117,11 @@ alias nvim-Yoink='NVIM_APPNAME="nvim-Yoink" nvim'
 ```
 When you run nvim-Yoink, it will use `~/.config/nvim-Yoink` and `~/.local/share/nvim-Yoink`.
 
-> [!FAQ]
-
-> Q: How do I remove Yoink.nvim?
-> A: See lazy.nvim uninstall.
-> Q: Why is this multi-file instead of one file?
-> A: The original Kickstart was single-file for simplicity. This fork is split into multiple files for easier maintenance and clarity.
-> Q: where is the rest of the README?
-> A: It has been reduced in size as most of Lua files are documented well enough. If you have any questions, feel free to ask in the issues section.
+ Q: How do I remove Yoink.nvim?
+ A: See lazy.nvim uninstall.
+ Q: Why is this multi-file instead of one file?
+ A: The original Kickstart was single-file for simplicity. This fork is split into multiple files for easier maintenance and clarity.
+ Q: where is the rest of the README?
+ A: It has been reduced in size as most of Lua files are documented well enough. If you have any questions, feel free to ask in the issues section.
 
 
