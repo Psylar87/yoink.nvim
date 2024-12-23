@@ -1,35 +1,15 @@
 # Yoink.nvim (Multi-File Edition)
 ![Yoink](yoink.nvim.png)
 ## "Professionally acquired configurations"
+<a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/plugins?style=flat" /></a>
+<a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/leaderkey?style=flat" /></a>
+<a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/plugin-manager?style=flat" /></a>
 
 A fun fork of [kickstart.nvim by MillerApps](https://github.com/MillerApps/kickstart.nvim).
 
 ## Introduction
 
 **Yoink.nvim** is a **multi-file** configuration inspired by the original [kickstart.nvim](https://github.com/MillerApps/kickstart.nvim). It maintains the original goal of offering a teaching tool and reference config, but in a **more modular and maintainable** structure.
-
----
-
-## Installation
-
-### 1. Install Neovim
-
-Yoink.nvim targets the latest [Neovim stable][nvim-stable] and [Neovim nightly][nvim-nightly].  
-If you encounter issues, ensure your Neovim version is up to date.
-
-### 2. Install External Dependencies
-
-> [!IMPORTANT]Before proceeding, 
-> [back up](#faq) any existing Neovim configuration.
-
-**Requirements:**
-- Basic utilities: `git`, `make`, `unzip`, a C compiler (e.g. `gcc`)
-- [ripgrep][rg-link]
-- A [Nerd Font][nerd-fonts] (optional, for icons)  
-  - If installed, set `vim.g.have_nerd_font = true` in `init.lua`
-- Language tooling as needed (e.g., `npm`, `go`, etc.)
-
-For more details and install scripts, see [Install Recipes](#install-recipes).
 
 > [!INFO] Default Neovim config paths:
 >
@@ -39,64 +19,11 @@ For more details and install scripts, see [Install Recipes](#install-recipes).
 > | Windows (cmd)         | `%userprofile%\AppData\Local\nvim\`            |
 > | Windows (PowerShell)  | `$env:USERPROFILE\AppData\Local\nvim\`         |
 
-### 3. Install Yoink.nvim
 
 #### Why Fork?
 Forking the repo ensures you have a personal copy to modify at will. See [GitHub docs on forking][gh-fork-docs].
 
 Replace `MillerApps/kickstart.nvim` with **your fork URL** if you fork the repo.
-
-#### Linux / MacOS
-
-```bash
-git clone https://github.com/MillerApps/kickstart.nvim.git \
-  "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
-``````
-
-## Post Installation
-### Start Neovim:
-
-```
-nvim
-
-```
-
-`lazy.nvim` will install all plugins automatically. Use `:Lazy` to check plugin status.
-
-## Take a look at your init.lua and the lua folder in your Neovim config directory to see how everything is organized. Feel free to customize, remove, or add plugins.
-
-## Adding Plugins in a Multi-File Setup
-
-## Inside a lua/plugins folder (or wherever you prefer), place each plugin in a separate file.
-
-### For example, if you want nvim-autopairs, create lua/plugins/autopairs.lua:
-```lua
--- File: lua/plugins/autopairs.lua
-return {
-  "windwp/nvim-autopairs",
-  dependencies = { "hrsh7th/nvim-cmp" }, -- optional
-  config = function()
-    require("nvim-autopairs").setup {}
-    -- Auto-add '(' after function/method completion
-    local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-    local cmp = require('cmp')
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-  end,
-}
-```
-
-## Additional Examples
-
-## Autopairs (simple version)
-```lua
--- File: lua/plugins/autopairs.lua
-return {
-  "windwp/nvim-autopairs",
-  config = function()
-    require("nvim-autopairs").setup {}
-  end,
-}
-```
 
  Q: I already have a Neovim config. What do I do?**
  A: Back up your existing config, then remove it:
@@ -117,11 +44,105 @@ alias nvim-Yoink='NVIM_APPNAME="nvim-Yoink" nvim'
 ```
 When you run nvim-Yoink, it will use `~/.config/nvim-Yoink` and `~/.local/share/nvim-Yoink`.
 
- Q: How do I remove Yoink.nvim?
- A: See lazy.nvim uninstall.
- Q: Why is this multi-file instead of one file?
- A: The original Kickstart was single-file for simplicity. This fork is split into multiple files for easier maintenance and clarity.
- Q: where is the rest of the README?
- A: It has been reduced in size as most of Lua files are documented well enough. If you have any questions, feel free to ask in the issues section.
+## Install Instructions
+
+ > Install requires Neovim 0.9+. Always review the code before installing a configuration.
+
+Clone the repository and install the plugins:
+
+```sh
+git clone git@github.com:MillerApps/yoink.nvim ~/.config/MillerApps/yoink.nvim
+```
+
+Open Neovim with this config:
+
+```sh
+NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
+```
+
+## Plugins
+
+### colorscheme
+
++ [catppuccin/nvim](https://dotfyle.com/plugins/catppuccin/nvim)
+### comment
+
++ [folke/todo-comments.nvim](https://dotfyle.com/plugins/folke/todo-comments.nvim)
++ [numToStr/Comment.nvim](https://dotfyle.com/plugins/numToStr/Comment.nvim)
+### completion
+
++ [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
+### debugging
+
++ [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
++ [rcarriga/nvim-dap-ui](https://dotfyle.com/plugins/rcarriga/nvim-dap-ui)
+### editing-support
+
++ [windwp/nvim-autopairs](https://dotfyle.com/plugins/windwp/nvim-autopairs)
++ [nvim-treesitter/nvim-treesitter-context](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-context)
+### file-explorer
+
++ [nvim-tree/nvim-tree.lua](https://dotfyle.com/plugins/nvim-tree/nvim-tree.lua)
+### formatting
+
++ [stevearc/conform.nvim](https://dotfyle.com/plugins/stevearc/conform.nvim)
+### fuzzy-finder
+
++ [nvim-telescope/telescope.nvim](https://dotfyle.com/plugins/nvim-telescope/telescope.nvim)
+### git
+
++ [lewis6991/gitsigns.nvim](https://dotfyle.com/plugins/lewis6991/gitsigns.nvim)
+### icon
+
++ [nvim-tree/nvim-web-devicons](https://dotfyle.com/plugins/nvim-tree/nvim-web-devicons)
+### indent
+
++ [lukas-reineke/indent-blankline.nvim](https://dotfyle.com/plugins/lukas-reineke/indent-blankline.nvim)
+### keybinding
+
++ [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
+### lsp
+
++ [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
++ [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
++ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
+### lsp-installer
+
++ [williamboman/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
+### markdown-and-latex
+
++ [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
+### note-taking
+
++ [epwalsh/obsidian.nvim](https://dotfyle.com/plugins/epwalsh/obsidian.nvim)
+### nvim-dev
+
++ [folke/neodev.nvim](https://dotfyle.com/plugins/folke/neodev.nvim)
++ [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
+### plugin-manager
+
++ [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
+### snippet
+
++ [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
+### startup
+
++ [goolord/alpha-nvim](https://dotfyle.com/plugins/goolord/alpha-nvim)
+### syntax
+
++ [nvim-treesitter/nvim-treesitter-textobjects](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter-textobjects)
++ [nvim-treesitter/nvim-treesitter](https://dotfyle.com/plugins/nvim-treesitter/nvim-treesitter)
+### tabline
+
++ [romgrk/barbar.nvim](https://dotfyle.com/plugins/romgrk/barbar.nvim)
+### utility
+
++ [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
++ [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
+## Language Servers
+
++ html
++ tflint
 
 
+ This readme was generated by [Dotfyle](https://dotfyle.com)
