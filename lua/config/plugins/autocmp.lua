@@ -71,6 +71,7 @@ return {
           { name = 'path' },
           -- If you added 'hrsh7th/cmp-buffer':
           { name = 'buffer' },
+          { name = 'render-markdown' },
         },
       }
     end,
