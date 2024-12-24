@@ -5,19 +5,19 @@
 <a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/leaderkey?style=for-the-badge" /></a>
 <a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/plugin-manager?style=for-the-badge" /></a>
 
-A fun fork of [kickstart.nvim by MillerApps](https://github.com/MillerApps/kickstart.nvim).
+A fun fork of [kickstart.nvim by MillerApps](https://github.com/nvim-lua/kickstart.nvim).
 
 ## Introduction
 
-**Yoink.nvim** is a **multi-file** configuration inspired by the original [kickstart.nvim](https://github.com/MillerApps/kickstart.nvim). It maintains the original goal of offering a teaching tool and reference config, but in a **more modular and maintainable** structure.
+**Yoink.nvim** is a **multi-file** configuration inspired by the original [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim). It maintains the original goal of offering a teaching tool and reference config, but in a **more modular and maintainable** structure.
 
 > [!INFO] Default Neovim config paths:
->
-> | OS                     | Path                                          |
-> |------------------------|-----------------------------------------------|
-> | Linux, MacOS          | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim`      |
-> | Windows (cmd)         | `%userprofile%\AppData\Local\nvim\`            |
-> | Windows (PowerShell)  | `$env:USERPROFILE\AppData\Local\nvim\`         |
+
+ | OS                     | Path                                          |
+ |------------------------|-----------------------------------------------|
+ | Linux, MacOS          | `$XDG_CONFIG_HOME/nvim`, `~/.config/nvim`      |
+ | Windows (cmd)         | `%userprofile%\AppData\Local\nvim\`            |
+ | Windows (PowerShell)  | `$env:USERPROFILE\AppData\Local\nvim\`         |
 
 
 #### Why Fork?
@@ -25,16 +25,16 @@ Forking the repo ensures you have a personal copy to modify at will. See [GitHub
 
 Replace `MillerApps/kickstart.nvim` with **your fork URL** if you fork the repo.
 
- Q: I already have a Neovim config. What do I do?**
- A: Back up your existing config, then remove it:
+> Q: I already have a Neovim config. What do I do?**
+> A: Back up your existing config, then remove it:
 
 ```sh 
 mv ~/.config/nvim ~/.config/nvim.old
 rm -rf ~/.local/share/nvim/
 ``````
 
- Q: Can I use multiple Neovim configs?
- A: Yes! Set `$NVIM_APPNAME`. For example:
+> Q: Can I use multiple Neovim configs?
+> A: Yes! Set `$NVIM_APPNAME`. For example:
 
 # Install this config in `~/.config/nvim-Yoink`
 # Then create an alias:
@@ -72,7 +72,7 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 + [numToStr/Comment.nvim](https://dotfyle.com/plugins/numToStr/Comment.nvim)
 ### completion
 
-+ [hrsh7th/nvim-cmp](https://dotfyle.com/plugins/hrsh7th/nvim-cmp)
++ [Saghen/blink.cmp](https://dotfyle.com/plugins/Saghen/blink.cmp)
 ### debugging
 
 + [mfussenegger/nvim-dap](https://dotfyle.com/plugins/mfussenegger/nvim-dap)
@@ -105,9 +105,9 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 + [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
 ### lsp
 
++ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
 + [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
 + [neovim/nvim-lspconfig](https://dotfyle.com/plugins/neovim/nvim-lspconfig)
-+ [mfussenegger/nvim-lint](https://dotfyle.com/plugins/mfussenegger/nvim-lint)
 ### lsp-installer
 
 + [williamboman/mason.nvim](https://dotfyle.com/plugins/williamboman/mason.nvim)
@@ -116,21 +116,22 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 + [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
 ### media
 
-+ [3rd/image.nvim](https://dotfyle.com/plugins/3rd/image.nvim)
 + [HakonHarnes/img-clip.nvim](https://dotfyle.com/plugins/HakonHarnes/img-clip.nvim)
++ [3rd/image.nvim](https://dotfyle.com/plugins/3rd/image.nvim)
 ### note-taking
 
 + [epwalsh/obsidian.nvim](https://dotfyle.com/plugins/epwalsh/obsidian.nvim)
 ### nvim-dev
 
-+ [folke/neodev.nvim](https://dotfyle.com/plugins/folke/neodev.nvim)
 + [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)
++ [MunifTanjim/nui.nvim](https://dotfyle.com/plugins/MunifTanjim/nui.nvim)
++ [folke/neodev.nvim](https://dotfyle.com/plugins/folke/neodev.nvim)
 ### plugin-manager
 
 + [folke/lazy.nvim](https://dotfyle.com/plugins/folke/lazy.nvim)
 ### snippet
 
-+ [L3MON4D3/LuaSnip](https://dotfyle.com/plugins/L3MON4D3/LuaSnip)
++ [rafamadriz/friendly-snippets](https://dotfyle.com/plugins/rafamadriz/friendly-snippets)
 ### startup
 
 + [goolord/alpha-nvim](https://dotfyle.com/plugins/goolord/alpha-nvim)
@@ -143,11 +144,13 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 + [romgrk/barbar.nvim](https://dotfyle.com/plugins/romgrk/barbar.nvim)
 ### utility
 
-+ [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
 + [folke/noice.nvim](https://dotfyle.com/plugins/folke/noice.nvim)
++ [rcarriga/nvim-notify](https://dotfyle.com/plugins/rcarriga/nvim-notify)
++ [echasnovski/mini.nvim](https://dotfyle.com/plugins/echasnovski/mini.nvim)
 ## Language Servers
 
 + html
 + tflint
+
 
  This readme was generated by [Dotfyle](https://dotfyle.com)
