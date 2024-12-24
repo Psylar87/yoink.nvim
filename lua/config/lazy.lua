@@ -19,8 +19,12 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup {
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
-    --------------------------------------------------------------------------------
+  --------------------------------------------------------------------------------
   -- Import Custom Plugins from 'lua/custom/plugins/*.lua'
   --------------------------------------------------------------------------------
   { import = 'config.plugins' },
+  --------------------------------------------------------------------------------
+  -- set keybindings
+  --------------------------------------------------------------------------------
+  vim.keymap.set('n', '<leader>l', ':Lazy<CR>', { noremap = true, silent = true }),
 }
