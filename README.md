@@ -11,7 +11,7 @@ A fun fork of [kickstart.nvim by MillerApps](https://github.com/nvim-lua/kicksta
 
 **Yoink.nvim** is a **multi-file** configuration inspired by the original [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim). It maintains the original goal of offering a teaching tool and reference config, but in a **more modular and maintainable** structure.
 
-> [!INFO] Default Neovim config paths:
+> [!NOTE] Default Neovim config paths:
 
  | OS                     | Path                                          |
  |------------------------|-----------------------------------------------|
@@ -25,7 +25,8 @@ Forking the repo ensures you have a personal copy to modify at will. See [GitHub
 
 Replace `MillerApps/kickstart.nvim` with **your fork URL** if you fork the repo.
 
-> Q: I already have a Neovim config. What do I do?**
+> Q: I already have a Neovim config. What do I do?
+>
 > A: Back up your existing config, then remove it:
 
 ```sh 
@@ -34,6 +35,7 @@ rm -rf ~/.local/share/nvim/
 ``````
 
 > Q: Can I use multiple Neovim configs?
+>
 > A: Yes! Set `$NVIM_APPNAME`. For example:
 
 # Install this config in `~/.config/nvim-Yoink`
