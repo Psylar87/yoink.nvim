@@ -5,6 +5,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
+      'saghen/blink.cmp',
       -- Automatically install LSPs and related tools
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
@@ -62,7 +63,6 @@ return {
       --  Extend LSP Capabilities (Autocompletion, Snippets, etc.)
       ----------------------------------------------------------------------------
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       ----------------------------------------------------------------------------
       --  Servers to Enable / Configure
