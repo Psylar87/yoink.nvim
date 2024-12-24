@@ -11,7 +11,9 @@ A fun fork of [kickstart.nvim by MillerApps](https://github.com/nvim-lua/kicksta
 
 **Yoink.nvim** is a **multi-file** configuration inspired by the original [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim). It maintains the original goal of offering a teaching tool and reference config, but in a **more modular and maintainable** structure.
 
-> [!NOTE] Default Neovim config paths:
+> [!NOTE] 
+> Default Neovim config paths:
+>
 
  | OS                     | Path                                          |
  |------------------------|-----------------------------------------------|
