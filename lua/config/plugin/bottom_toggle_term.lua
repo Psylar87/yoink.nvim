@@ -56,7 +56,7 @@ local function toggle_terminal()
 end
 
 -- Keybinding to toggle terminal with <A-t>
-vim.keymap.set('n', '<A-t>', toggle_terminal, {
+vim.keymap.set('n', '<C-\\>', toggle_terminal, {
   desc = 'Toggle bottom terminal',
 })
 

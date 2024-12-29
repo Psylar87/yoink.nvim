@@ -32,7 +32,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- nvimtree
 -- NOTE: This is what gives easy file navigation toggles
 
-map('n', '<C-n>', '<cmd>NvimTreeToggle<CR>', { desc = 'Nvimtree Toggle window' })
+map('n', '<C-f>', '<cmd>NvimTreeToggle<CR>', { desc = 'Nvimtree Toggle window' })
 map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', { desc = 'Nvimtree Focus window' })
 
 --Barbar add buffer tabs
