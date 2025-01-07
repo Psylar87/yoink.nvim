@@ -35,6 +35,24 @@ return {
       -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
       name = 'telescope.nvim',
     },
+    -- Optional, alternatively you can customize the frontmatter data.
+    note_frontmatter_func = function(note)
+      -- This is equivalent to the default frontmatter function.
+      local out = {
+        crated = os.date '!%Y-%m-%d %H:%M:%S',
+        title = note.id,
+        aliases = note.aliases,
+        tags = note.tags,
+      }
+      -- `note.metadata` contains any manually added fields in the frontmatter.
+      -- So here we just make sure those fields are kept in the frontmatter.
+      if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+        for k, v in pairs(note.metadata) do
+          out[k] = v
+        end
+      end
+      return out
+    end,
   },
   -- Set keymaps after setup
   vim.keymap.set('n', '<leader>of', ':ObsidianSearch<CR>', { desc = 'Search files' }),
