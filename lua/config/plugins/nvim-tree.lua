@@ -9,7 +9,7 @@ return {
     config = function()
       require('nvim-tree').setup {
         view = {
-          adaptive_size = true, -- Automatically adjusts the width to fit file names
+          --          adaptive_size = true, -- Automatically adjusts the width to fit file names
         },
       }
     end,
