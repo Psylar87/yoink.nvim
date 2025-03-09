@@ -5,7 +5,14 @@ return {
   ---@type snacks.Config
   opts = {
     dim = { enabled = true },
-    terminal = { enabled = true },
+    terminal = {
+      enabled = true,
+      win = {
+        width = 1.0,
+        height = 0.2,
+        position = 'bottom',
+      },
+    },
     lazygit = { enabled = true },
     git = { enabled = true },
     gitbrowse = { enabled = true },
