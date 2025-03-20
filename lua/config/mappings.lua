@@ -1,39 +1,32 @@
 local map = vim.keymap.set
 
+-- Save and quit
+map('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
+map('n', '<C-x>', '<cmd>x<cr>', { desc = 'Save and quit' })
+map('n', '<C-q>', '<cmd>qa<cr>', { desc = 'Quit all' })
+
+-- Use CTRL+<hjkl> to switch between windows
+map('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+map('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- Window management
+map('n', '<leader>sv', '<cmd>vsplit<cr>', { desc = 'Split window vertically' })
+map('n', '<leader>sh', '<cmd>split<cr>', { desc = 'Split window horizontally' })
+
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
--- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+-- Changed from <leader>e to <leader>d to avoid conflict with NvimTree
+map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show [D]iagnostic message' })
+map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- nvim-tree
 map('n', '<C-f>', '<cmd>NvimTreeToggle<CR>', { desc = 'Nvimtree Toggle window' })
 map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', { desc = 'Nvimtree Focus window' })
+map('n', '<leader>ef', '<cmd>NvimTreeFindFile<CR>', { desc = 'Nvimtree Find current file' })
 
---Barbar add buffer tabs
 local opts = { noremap = true, silent = true }
 
 -- Move to previous/next
@@ -62,13 +55,6 @@ map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
 -- Close buffer
 map('n', '<A-q>', '<Cmd>BufferClose<CR>', opts)
 
--- Close commands
---                 :BufferCloseAllButCurrent
---                 :BufferCloseAllButPinned
---                 :BufferCloseAllButCurrentOrPinned
---                 :BufferCloseBuffersLeft
---                 :BufferCloseBuffersRight
---
 -- Magic buffer-picking mode
 map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
 
@@ -78,13 +64,46 @@ map('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
 map('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
 map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
--- save file
-map('n', '<C-s>', '<cmd>w<cr>')
--- save and quit
-map('n', '<C-x>', '<cmd>x<cr>')
--- Quit all
-map('n', '<C-q>', '<cmd>qa<cr>')
+-- Close commands (commented reference)
+-- :BufferCloseAllButCurrent
+-- :BufferCloseAllButPinned
+-- :BufferCloseAllButCurrentOrPinned
+-- :BufferCloseBuffersLeft
+-- :BufferCloseBuffersRight
 
--- Other:
--- :BarbarEnable - enables barbar (enabled by default)
--- :BarbarDisable - very bad command, should never be used
+-- LSP mappings
+map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to [D]efinition' })
+map('n', 'gr', vim.lsp.buf.references, { desc = 'Go to [R]eferences' })
+map('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
+map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code [A]ction' })
+map('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
+map('n', '<leader>f', vim.lsp.buf.format, { desc = '[F]ormat code' })
+
+-- Telescope mappings
+map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = '[F]ind [F]iles' })
+map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = '[F]ind by [G]rep' })
+map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = '[F]ind [B]uffers' })
+map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = '[F]ind [H]elp' })
+
+-- Git mappings (for gitsigns)
+map('n', '<leader>gb', '<cmd>Gitsigns toggle_current_line_blame<CR>', { desc = '[G]it [B]lame toggle' })
+map('n', ']g', '<cmd>Gitsigns next_hunk<CR>', { desc = 'Next git hunk' })
+map('n', '[g', '<cmd>Gitsigns prev_hunk<CR>', { desc = 'Previous git hunk' })
+map('n', '<leader>gs', '<cmd>Gitsigns stage_hunk<CR>', { desc = '[G]it [S]tage hunk' })
+map('n', '<leader>gr', '<cmd>Gitsigns reset_hunk<CR>', { desc = '[G]it [R]eset hunk' })
+map('n', '<leader>gp', '<cmd>Gitsigns preview_hunk<CR>', { desc = '[G]it [P]review hunk' })
+
+-- Obsidian mappings
+map('n', '<leader>on', '<cmd>ObsidianNew<CR>', { desc = '[O]bsidian [N]ew note' })
+map('n', '<leader>oo', '<cmd>ObsidianOpen<CR>', { desc = '[O]bsidian [O]pen' })
+map('n', '<leader>os', '<cmd>ObsidianSearch<CR>', { desc = '[O]bsidian [S]earch' })
+map('n', '<leader>ob', '<cmd>ObsidianBacklinks<CR>', { desc = '[O]bsidian [B]acklinks' })
+
+-- Highlight when yanking (copying) text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
