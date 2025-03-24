@@ -9,13 +9,13 @@ return {
     },
     float = {
       padding = 10,
-      max_width = 0.2,
+      max_width = 0,
       max_height = 0,
       border = 'rounded',
       win_options = {
         winblend = 10,
       },
-      preview_split = 'auto',
+      preview_split = 'right',
     },
     keymaps = {
       ['<Esc>'] = 'actions.close',
