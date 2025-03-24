@@ -7,12 +7,12 @@ return {
       show_hidden = true,
     },
     float = {
-      padding = 2,
+      padding = 10,
       max_width = 100,
       max_height = 0,
       border = 'rounded',
       win_options = {
-        winblend = 10,
+        winblend = 20,
       },
     },
     keymaps = {
