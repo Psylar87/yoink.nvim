@@ -3,7 +3,30 @@ return {
   opts = {
     delete_to_trash = true,
     skip_confrim_from_simple_edits = true,
+    view_options = {
+      show_hidden = true,
+    },
+    float = {
+      padding = 2,
+      max_width = 0,
+      max_height = 0,
+      border = 'rounded',
+      win_options = {
+        winblend = 10,
+      },
+    },
+    keymaps = {
+      ['q'] = 'actions.close',
+      ['<Esc>'] = 'actions.close',
+    },
   },
   lazy = false,
-  vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' }),
+  config = function(_, opts)
+    -- Setup oil with the options
+    require('oil').setup(opts)
+
+    vim.keymap.set('n', '-', function()
+      require('oil').open_float()
+    end, { desc = 'Open parent directory in float' })
+  end,
 }
