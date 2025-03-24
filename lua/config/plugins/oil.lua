@@ -3,17 +3,19 @@ return {
   opts = {
     delete_to_trash = true,
     skip_confrim_from_simple_edits = false,
+    natural_order = 'fast',
     view_options = {
       show_hidden = true,
     },
     float = {
       padding = 10,
-      max_width = 120,
+      max_width = 0.2,
       max_height = 0,
       border = 'rounded',
       win_options = {
         winblend = 10,
       },
+      preview_split = 'auto',
     },
     keymaps = {
       ['<Esc>'] = 'actions.close',
