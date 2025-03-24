@@ -22,7 +22,6 @@ return {
   },
   lazy = false,
   config = function(_, opts)
-    -- Setup oil with the options
     require('oil').setup(opts)
 
     vim.keymap.set('n', '-', function()
