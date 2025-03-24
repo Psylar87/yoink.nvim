@@ -8,11 +8,11 @@ return {
     },
     float = {
       padding = 10,
-      max_width = 100,
+      max_width = 120,
       max_height = 0,
       border = 'rounded',
       win_options = {
-        winblend = 20,
+        winblend = 35,
       },
     },
     keymaps = {
