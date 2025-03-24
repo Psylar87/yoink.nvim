@@ -2,7 +2,7 @@ return {
   'stevearc/oil.nvim',
   opts = {
     delete_to_trash = true,
-    skip_confrim_from_simple_edits = true,
+    skip_confrim_from_simple_edits = false,
     view_options = {
       show_hidden = true,
     },
@@ -16,7 +16,6 @@ return {
       },
     },
     keymaps = {
-      ['q'] = 'actions.close',
       ['<Esc>'] = 'actions.close',
     },
   },
