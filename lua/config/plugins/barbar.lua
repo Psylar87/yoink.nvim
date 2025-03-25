@@ -8,8 +8,6 @@ return {
     },
     init = function()
       vim.g.barbar_auto_setup = false -- Disable auto-setup to use custom config
-
-      -- Fix for sessionoptions syntax (use : instead of space)
       vim.opt.sessionoptions:append 'globals' -- For session support
 
       -- Add autocmd for session save
@@ -29,50 +27,36 @@ return {
       focus_on_close = 'previous',
 
       -- Hide certain buffers
-      exclude_ft = { 'NvimTree', 'help', 'qf' }, -- Removed 'Outline' if not using it
+      exclude_ft = { 'NvimTree', 'help', 'qf' },
       exclude_name = { '[dap-repl]' },
 
       -- Icons configuration
       icons = {
-        -- Use a preset for a predefined look
         preset = 'default',
-
-        -- Buffer index display
         buffer_index = true,
-
-        -- File icons
         filetype = {
           enabled = true,
           custom_colors = true,
         },
-
-        -- Separators
         separator = {
           left = '▎',
           right = '',
         },
         separator_at_end = true, -- Moved out of separator table
 
-        -- Modified indicator
         modified = {
           button = '●',
         },
-
-        -- Pinned indicator
         pinned = {
           button = '󰐃',
           filename = true,
         },
-
-        -- Diagnostics integration
         diagnostics = {
           [vim.diagnostic.severity.ERROR] = { enabled = true, icon = ' ' },
           [vim.diagnostic.severity.WARN] = { enabled = true, icon = ' ' },
           [vim.diagnostic.severity.INFO] = { enabled = true, icon = ' ' },
           [vim.diagnostic.severity.HINT] = { enabled = true, icon = ' ' },
         },
-
-        -- Git integration - make sure gitsigns is loaded
         gitsigns = {
           added = { enabled = true, icon = '+' },
           changed = { enabled = true, icon = '~' },
@@ -98,9 +82,9 @@ return {
       minimum_padding = 1,
       maximum_length = 30,
 
-      -- NvimTree integration
+      -- NvimTree integration - simplified
       sidebar_filetypes = {
-        NvimTree = { text = 'File Explorer' }, -- Simplified
+        NvimTree = true, -- Just use true instead of a table for basic integration
       },
 
       -- Sorting options
@@ -112,17 +96,9 @@ return {
       no_name_title = '[No Name]',
     },
     config = function(_, opts)
-      -- Make sure barbar is properly loaded before setting up
-      local ok, barbar = pcall(require, 'barbar')
-      if not ok then
-        vim.notify('barbar.nvim not found', vim.log.levels.ERROR)
-        return
-      end
+      require('barbar').setup(opts)
 
-      -- Setup barbar with error handling
-      pcall(barbar.setup, opts)
-
-      -- Custom highlight groups for barbar (wrapped in pcall for safety)
+      -- Custom highlight groups for barbar
       pcall(function()
         vim.api.nvim_set_hl(0, 'BufferCurrent', { fg = '#ffffff', bg = '#1a1b26', bold = true })
         vim.api.nvim_set_hl(0, 'BufferCurrentIndex', { fg = '#7aa2f7', bg = '#1a1b26' })
@@ -133,19 +109,25 @@ return {
         vim.api.nvim_set_hl(0, 'BufferTabpageFill', { fg = '#16161e', bg = '#16161e' })
       end)
 
-      -- NvimTree integration with error handling
-      vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'NvimTree',
-        callback = function()
-          -- Ensure NvimTree is properly integrated with barbar
-          pcall(function()
-            local api = require 'barbar.api'
-            if api and api.update then
-              api.update()
-            end
-          end)
-        end,
-      })
+      -- Proper NvimTree integration using nvim-tree events
+      local nvim_tree_events = require('nvim-tree.api').events
+      local Event = nvim_tree_events.Event
+      local barbar_api = require 'barbar.api'
+
+      nvim_tree_events.subscribe(Event.TreeOpen, function()
+        -- Adjust barbar when tree is opened
+        barbar_api.set_offset(vim.fn.winwidth(0), 'NvimTree')
+      end)
+
+      nvim_tree_events.subscribe(Event.TreeClose, function()
+        -- Reset offset when tree is closed
+        barbar_api.set_offset(0)
+      end)
+
+      nvim_tree_events.subscribe(Event.Resize, function(size)
+        -- Adjust offset when tree is resized
+        barbar_api.set_offset(size, 'NvimTree')
+      end)
     end,
   },
 }
