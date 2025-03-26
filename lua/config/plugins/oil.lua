@@ -13,7 +13,7 @@ return {
       max_height = 0,
       border = 'rounded',
       win_options = {
-        winblend = 10,
+        winblend = 30,
       },
       preview_split = 'right',
     },

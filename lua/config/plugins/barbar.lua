@@ -91,13 +91,14 @@ return {
       require('barbar').setup(opts)
 
       pcall(function()
-        vim.api.nvim_set_hl(0, 'BufferCurrent', { fg = '#ffffff', bg = '#1a1b26', bold = true })
-        vim.api.nvim_set_hl(0, 'BufferCurrentIndex', { fg = '#7aa2f7', bg = '#1a1b26' })
-        vim.api.nvim_set_hl(0, 'BufferCurrentMod', { fg = '#e0af68', bg = '#1a1b26' })
-        vim.api.nvim_set_hl(0, 'BufferCurrentSign', { fg = '#7aa2f7', bg = '#1a1b26' })
-        vim.api.nvim_set_hl(0, 'BufferInactive', { fg = '#737aa2', bg = '#16161e' })
-        vim.api.nvim_set_hl(0, 'BufferInactiveMod', { fg = '#e0af68', bg = '#16161e' })
-        vim.api.nvim_set_hl(0, 'BufferTabpageFill', { fg = '#16161e', bg = '#16161e' })
+        -- Catppuccin Mocha with sapphire accent
+        vim.api.nvim_set_hl(0, 'BufferCurrent', { fg = '#cdd6f4', bg = '#1e1e2e', bold = true })
+        vim.api.nvim_set_hl(0, 'BufferCurrentIndex', { fg = '#74c7ec', bg = '#1e1e2e' })
+        vim.api.nvim_set_hl(0, 'BufferCurrentMod', { fg = '#f9e2af', bg = '#1e1e2e' })
+        vim.api.nvim_set_hl(0, 'BufferCurrentSign', { fg = '#74c7ec', bg = '#1e1e2e' })
+        vim.api.nvim_set_hl(0, 'BufferInactive', { fg = '#a6adc8', bg = '#181825' })
+        vim.api.nvim_set_hl(0, 'BufferInactiveMod', { fg = '#f9e2af', bg = '#181825' })
+        vim.api.nvim_set_hl(0, 'BufferTabpageFill', { fg = '#181825', bg = '#181825' })
       end)
 
       local nvim_tree_events = require('nvim-tree.api').events
