@@ -51,9 +51,9 @@ return {
         --
         defaults = {
           winblend = 10,
-          -- mappings = {
-          --   i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-          -- },
+          mappings = {
+            i = { ['<c-enter>'] = 'to_fuzzy_refine' },
+          },
         },
         -- pickers = {}
         extensions = {

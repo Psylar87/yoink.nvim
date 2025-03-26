@@ -7,6 +7,7 @@ return {
       require('catppuccin').setup {
         integrations = {
           telescope = true,
+          barbar = true,
         },
       }
       vim.cmd.colorscheme 'catppuccin-mocha'

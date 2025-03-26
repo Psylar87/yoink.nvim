@@ -14,6 +14,7 @@ map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 -- Diagnostic keymaps
 map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+
 -- Changed from <leader>e to <leader>d to avoid conflict with NvimTree
 map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show [D]iagnostic message' })
 map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -74,12 +75,6 @@ map('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
 map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code [A]ction' })
 map('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
 map('n', '<leader>f', vim.lsp.buf.format, { desc = '[F]ormat code' })
-
--- Telescope mappings
-map('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = '[F]ind [F]iles' })
-map('n', '<leader>fg', '<cmd>Telescope live_grep<cr>', { desc = '[F]ind by [G]rep' })
-map('n', '<leader>fb', '<cmd>Telescope buffers<cr>', { desc = '[F]ind [B]uffers' })
-map('n', '<leader>fh', '<cmd>Telescope help_tags<cr>', { desc = '[F]ind [H]elp' })
 
 -- Git mappings (for gitsigns)
 map('n', '<leader>gb', '<cmd>Gitsigns toggle_current_line_blame<CR>', { desc = '[G]it [B]lame toggle' })
