@@ -3,19 +3,16 @@ return {
     'romgrk/barbar.nvim',
     version = '*',
     dependencies = {
-      'nvim-tree/nvim-web-devicons', -- For file icons
-      'lewis6991/gitsigns.nvim', -- Required for git integration
+      'nvim-tree/nvim-web-devicons',
+      'lewis6991/gitsigns.nvim',
     },
     init = function()
-      vim.g.barbar_auto_setup = false -- Disable auto-setup to use custom config
-      vim.opt.sessionoptions:append 'globals' -- For session support
+      vim.g.barbar_auto_setup = false
+      vim.opt.sessionoptions:append 'globals'
 
-      -- Add autocmd for session save
       vim.api.nvim_create_autocmd('User', {
         pattern = 'SessionSavePre',
-        callback = function()
-          -- barbar will handle saving buffer state
-        end,
+        callback = function() end,
       })
     end,
     opts = {
@@ -30,7 +27,6 @@ return {
       exclude_ft = { 'NvimTree', 'help', 'qf' },
       exclude_name = { '[dap-repl]' },
 
-      -- Icons configuration
       icons = {
         preset = 'default',
         buffer_index = true,
@@ -42,7 +38,7 @@ return {
           left = '▎',
           right = '',
         },
-        separator_at_end = true, -- Moved out of separator table
+        separator_at_end = true,
 
         modified = {
           button = '●',
@@ -63,7 +59,6 @@ return {
           deleted = { enabled = true, icon = '-' },
         },
 
-        -- Customize appearance for different buffer states
         current = {
           buffer_index = true,
           button = '',
@@ -82,23 +77,19 @@ return {
       minimum_padding = 1,
       maximum_length = 30,
 
-      -- NvimTree integration - simplified
       sidebar_filetypes = {
-        NvimTree = true, -- Just use true instead of a table for basic integration
+        NvimTree = true,
       },
 
-      -- Sorting options
       sort = {
         ignore_case = true,
       },
 
-      -- No name buffer title
       no_name_title = '[No Name]',
     },
     config = function(_, opts)
       require('barbar').setup(opts)
 
-      -- Custom highlight groups for barbar
       pcall(function()
         vim.api.nvim_set_hl(0, 'BufferCurrent', { fg = '#ffffff', bg = '#1a1b26', bold = true })
         vim.api.nvim_set_hl(0, 'BufferCurrentIndex', { fg = '#7aa2f7', bg = '#1a1b26' })
@@ -109,23 +100,19 @@ return {
         vim.api.nvim_set_hl(0, 'BufferTabpageFill', { fg = '#16161e', bg = '#16161e' })
       end)
 
-      -- Proper NvimTree integration using nvim-tree events
       local nvim_tree_events = require('nvim-tree.api').events
       local Event = nvim_tree_events.Event
       local barbar_api = require 'barbar.api'
 
       nvim_tree_events.subscribe(Event.TreeOpen, function()
-        -- Adjust barbar when tree is opened
         barbar_api.set_offset(vim.fn.winwidth(0), 'NvimTree')
       end)
 
       nvim_tree_events.subscribe(Event.TreeClose, function()
-        -- Reset offset when tree is closed
         barbar_api.set_offset(0)
       end)
 
       nvim_tree_events.subscribe(Event.Resize, function(size)
-        -- Adjust offset when tree is resized
         barbar_api.set_offset(size, 'NvimTree')
       end)
     end,
