@@ -60,7 +60,7 @@ return {
 
     -- Mason integration
     require('mason-nvim-dap').setup {
-      ensure_installed = { 'python', 'delve', 'codelldb' }, -- Added codelldb for C/C++/Rust
+      ensure_installed = { 'python', 'delve', 'codelldb' },
       automatic_installation = true,
     }
 
