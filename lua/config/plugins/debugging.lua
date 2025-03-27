@@ -110,12 +110,5 @@ return {
     vim.keymap.set('n', '<Leader>bv', function()
       dapui.eval()
     end)
-
-    -- Add a which-key group for debugging if which-key is installed
-    pcall(function()
-      require('which-key').register {
-        ['<Leader>b'] = { name = 'Debug' },
-      }
-    end)
   end,
 }
