@@ -28,6 +28,7 @@ return {
     vim.keymap.set('n', '-', function()
       require('oil').open_float()
     end, { desc = 'Open parent directory in float' })
+
     vim.keymap.set('n', '_', function()
       require('oil').open_float(nil, { preview = { vertical = true } })
     end, { desc = 'Open parent directory in float with preview' })

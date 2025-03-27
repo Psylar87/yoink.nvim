@@ -6,7 +6,16 @@ return {
   opts = {
     dim = { enabled = true },
     terminal = { enabled = true },
-    lazygit = { enabled = true },
+    lazygit = {
+      enabled = true,
+      config = {
+        gui = {
+          theme = {
+            activeBorderColor = { 'cyan', 'bold' },
+          },
+        },
+      },
+    },
     git = { enabled = true },
     gitbrowse = { enabled = true },
     bigfile = { enabled = false },

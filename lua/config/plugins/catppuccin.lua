@@ -8,6 +8,8 @@ return {
         integrations = {
           telescope = true,
           barbar = true,
+          which_key = true,
+          snacks = true,
         },
       }
       vim.cmd.colorscheme 'catppuccin-mocha'
