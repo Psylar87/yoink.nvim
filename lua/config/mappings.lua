@@ -1,5 +1,25 @@
 local map = vim.keymap.set
 
+-- mini.nvim keymaps
+local function setup_mini_mappings()
+  map('n', '<leader>bd', function()
+    require('mini.bufremove').delete()
+  end, { desc = 'Delete buffer' })
+
+  map('n', 'gS', function()
+    require('mini.splitjoin').toggle()
+  end, { desc = 'Toggle split/join' })
+end
+
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'LazyLoad',
+  callback = function(event)
+    if event.data == 'mini.nvim' then
+      setup_mini_mappings()
+    end
+  end,
+})
+
 -- Save and quit
 map('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save file' })
 map('n', '<C-x>', '<cmd>x<cr>', { desc = 'Save and quit' })
@@ -89,10 +109,6 @@ map('n', '<leader>on', '<cmd>ObsidianNew<CR>', { desc = '[O]bsidian [N]ew note' 
 map('n', '<leader>oo', '<cmd>ObsidianOpen<CR>', { desc = '[O]bsidian [O]pen' })
 map('n', '<leader>os', '<cmd>ObsidianSearch<CR>', { desc = '[O]bsidian [S]earch' })
 map('n', '<leader>ob', '<cmd>ObsidianBacklinks<CR>', { desc = '[O]bsidian [B]acklinks' })
-
--- Mini.nvim keymaps
-map('n', '<leader>bd', require('mini.bufremove').delete, { desc = 'Delete buffer' })
-map('n', 'gS', require('mini.splitjoin').toggle, { desc = 'Toggle split/join' })
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
