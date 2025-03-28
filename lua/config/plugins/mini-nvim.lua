@@ -15,31 +15,51 @@ return {
       -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
       -- - sd'   - [S]urround [D]elete [']quotes
       -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
+      require('mini.surround').setup {
+        n_lines = 100,
+        highlight_duration = 500,
+        mappings = {
+          add = 'sa', -- Add surrounding
+          delete = 'sd', -- Delete surrounding
+          replace = 'sr', -- Replace surrounding
+          find = 'sf', -- Find surrounding (to the right)
+          find_left = 'sF', -- Find surrounding (to the left)
+          highlight = 'sh', -- Highlight surrounding
+          update_n_lines = 'sn', -- Update `n_lines`
+        },
+      }
 
       -- Auto-pair brackets, quotes, etc.
-      -- Automatically closes brackets and quotes as you type
       require('mini.pairs').setup()
 
       -- Smart commenting functionality
-      -- gcc - Toggle line comment
-      -- gc{motion} - Toggle comment for motion
-      require('mini.comment').setup()
+      require('mini.comment').setup {
+        options = {
+          custom_commentstring = nil,
+          ignore_blank_line = false,
+          start_of_line = false,
+          pad_comment_parts = true,
+        },
+      }
 
       -- Visual guides for indentation
-      -- Shows vertical lines for each indentation level
       require('mini.indentscope').setup {
         symbol = '│',
-        options = { try_as_border = true },
+        options = {
+          try_as_border = true,
+          indent_at_cursor = true,
+          border = 'both',
+        },
+        draw = {
+          delay = 100,
+          animation = require('mini.indentscope').gen_animation.none(),
+        },
       }
 
       -- Highlight word under cursor
-      -- Automatically highlights all instances of the word under cursor
       require('mini.cursorword').setup()
 
       -- Move lines and blocks of text
-      -- Alt+j/k to move lines up/down in normal and visual mode
-      -- Alt+h/l to move character/selection left/right
       require('mini.move').setup {
         mappings = {
           -- Move visual selection in Visual mode
@@ -55,38 +75,64 @@ return {
         },
       }
 
-      -- Better buffer removal (doesn't mess up layout)
-      -- Use with keymaps like:
-      -- vim.keymap.set('n', '<leader>bd', function() require('mini.bufremove').delete() end)
+      -- Better buffer removal
       require('mini.bufremove').setup()
 
       -- Jump to any position in visible text
-      -- Press f/F followed by a character to jump to it
       require('mini.jump').setup()
 
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
+      -- Statusline configuration
       local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
+      statusline.setup {
+        use_icons = vim.g.have_nerd_font,
+        set_vim_settings = true,
+        content = {
+          active = function()
+            local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+            local git = statusline.section_git { trunc_width = 75 }
+            local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
+            local filename = statusline.section_filename { trunc_width = 140 }
+            local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
+            local location = '%2l:%-2v'
 
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
+            return statusline.combine_groups {
+              { hl = mode_hl, strings = { mode } },
+              { hl = 'MiniStatuslineDevinfo', strings = { git, diagnostics } },
+              '%<', -- Mark general truncate point
+              { hl = 'MiniStatuslineFilename', strings = { filename } },
+              '%=', -- End left alignment
+              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+              { hl = mode_hl, strings = { location } },
+            }
+          end,
+        },
+      }
 
-      -- File explorer (optional, if you don't use another file explorer)
-      -- require('mini.files').setup()
+      -- NEW MODULES
 
-      -- Animated scrolling (optional, for smooth scrolling)
-      -- require('mini.animate').setup()
+      -- Bracketed navigation
+      require('mini.bracketed').setup()
 
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
+      -- Show next key clues
+      require('mini.clue').setup()
+
+      -- Highlight patterns in text
+      require('mini.hipatterns').setup()
+
+      -- Split and join arguments
+      require('mini.splitjoin').setup()
+
+      -- Track file visits
+      require('mini.visits').setup()
+
+      -- KEYMAPS
+      vim.keymap.set('n', '<leader>bd', function()
+        require('mini.bufremove').delete()
+      end, { desc = 'Delete buffer' })
+
+      vim.keymap.set('n', 'gS', function()
+        require('mini.splitjoin').toggle()
+      end, { desc = 'Toggle split/join' })
     end,
   },
 }
