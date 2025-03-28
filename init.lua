@@ -8,7 +8,7 @@ require 'config.lazy'
 -- Example Kickstart "Indent line" plugin
 -- (or you could consider 'lukas-reineke/indent-blankline.nvim')
 --------------------------------------------------------------------------------
-require 'kickstart.plugins.indent_line'
+-- require 'kickstart.plugins.indent_line'
 
 -- Auto-open nvim-tree on startup while preserving dashboard
 vim.api.nvim_create_autocmd('VimEnter', {
