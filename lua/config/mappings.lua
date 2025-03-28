@@ -90,6 +90,10 @@ map('n', '<leader>oo', '<cmd>ObsidianOpen<CR>', { desc = '[O]bsidian [O]pen' })
 map('n', '<leader>os', '<cmd>ObsidianSearch<CR>', { desc = '[O]bsidian [S]earch' })
 map('n', '<leader>ob', '<cmd>ObsidianBacklinks<CR>', { desc = '[O]bsidian [B]acklinks' })
 
+-- Mini.nvim keymaps
+map('n', '<leader>bd', require('mini.bufremove').delete, { desc = 'Delete buffer' })
+map('n', 'gS', require('mini.splitjoin').toggle, { desc = 'Toggle split/join' })
+
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',

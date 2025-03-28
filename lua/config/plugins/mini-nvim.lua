@@ -124,15 +124,6 @@ return {
 
       -- Track file visits
       require('mini.visits').setup()
-
-      -- KEYMAPS
-      vim.keymap.set('n', '<leader>bd', function()
-        require('mini.bufremove').delete()
-      end, { desc = 'Delete buffer' })
-
-      vim.keymap.set('n', 'gS', function()
-        require('mini.splitjoin').toggle()
-      end, { desc = 'Toggle split/join' })
     end,
   },
 }
