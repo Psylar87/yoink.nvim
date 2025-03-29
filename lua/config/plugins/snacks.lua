@@ -22,7 +22,7 @@ return {
       config = {
         gui = {
           theme = {
-            activeBorderColor = { 'cyan', 'bold' },
+            activeBorderColor = { '#74c7ec', 'bold' },
           },
         },
       },
