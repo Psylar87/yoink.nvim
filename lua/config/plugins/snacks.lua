@@ -8,7 +8,6 @@ return {
     terminal = {
       enabled = true,
       win = {
-        width = 0.5,
         height = 0.3,
         float = true,
       },
