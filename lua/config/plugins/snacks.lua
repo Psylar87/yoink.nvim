@@ -5,9 +5,21 @@ return {
   ---@type snacks.Config
   opts = {
     dim = { enabled = true },
-    terminal = { enabled = true },
+    terminal = {
+      enabled = true,
+      win = {
+        width = 0.5,
+        height = 0.3,
+        float = true,
+      },
+    },
     lazygit = {
       enabled = true,
+      win = {
+        width = 0.9,
+        height = 0.9,
+        float = true,
+      },
       config = {
         gui = {
           theme = {
