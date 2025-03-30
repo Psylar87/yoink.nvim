@@ -75,15 +75,16 @@ return {
       -- Buffer appearance
       maximum_padding = 2,
       minimum_padding = 1,
-      maximum_length = 30,
+      maximum_length = 25,
 
-      sidebar_filetypes = {
-        NvimTree = true,
-      },
-
+      -- Sorting configuration
       sort = {
         ignore_case = true,
       },
+
+      -- Buffer picking configuration
+      semantic_letters = true,
+      letters = 'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERUTYQP',
 
       no_name_title = '[No Name]',
     },
