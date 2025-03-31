@@ -4,7 +4,7 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    dim = { enabled = true },
+    dim = { enabled = false },
     terminal = {
       enabled = true,
       win = {
