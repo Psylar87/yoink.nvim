@@ -30,7 +30,7 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
--- Preview substitutions live, as you type!
+-- Preview substitutions live, as you type
 vim.opt.inccommand = 'split'
 
 -- Tab and indent settings
@@ -42,8 +42,7 @@ vim.opt.breakindent = true
 
 -- Visual enhancements
 vim.opt.termguicolors = true
-vim.opt.showmatch = true
--- vim.opt.colorcolumn = '80'
+vim.opt.showmatch = false
 vim.opt.signcolumn = 'yes'
 vim.opt.cursorline = true
 vim.opt.showmode = true
@@ -57,7 +56,6 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
--- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
 -- Performance and history
