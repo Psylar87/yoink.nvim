@@ -21,7 +21,7 @@ return {
     workspaces = {
       {
         name = 'Dev',
-        path = '/Users/brandoncard/Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/',
+        path = vim.fn.expand '$HOME' .. '/Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/',
       },
     },
     -- completion of wiki links, local markdown links, and tags using nvim-cmp.
