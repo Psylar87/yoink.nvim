@@ -54,11 +54,12 @@ return {
       return out
     end,
   },
-  -- Set keymaps after setup
-  vim.keymap.set('n', '<leader>of', ':ObsidianSearch<CR>', { desc = 'Search files' }),
-  vim.keymap.set('n', '<leader>os', ':ObsidianQuickSwitch<CR>', { desc = 'Quick switch' }),
-  vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>', { desc = 'New note' }),
-  vim.keymap.set('n', '<leader>ol', ':ObsidianFollowLink<CR>', { desc = 'Follow link' }),
-  vim.keymap.set('n', '<leader>ob', ':ObsidianBacklinks<CR>', { desc = 'Show backlinks' }),
-  vim.keymap.set('n', '<leader>ot', ':ObsidianTags<CR>', { desc = 'Browse tags' }),
+  config = function()
+    vim.keymap.set('n', '<leader>of', ':ObsidianSearch<CR>', { desc = 'Search files' })
+    vim.keymap.set('n', '<leader>os', ':ObsidianQuickSwitch<CR>', { desc = 'Quick switch' })
+    vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>', { desc = 'New note' })
+    vim.keymap.set('n', '<leader>ol', ':ObsidianFollowLink<CR>', { desc = 'Follow link' })
+    vim.keymap.set('n', '<leader>ob', ':ObsidianBacklinks<CR>', { desc = 'Show backlinks' })
+    vim.keymap.set('n', '<leader>ot', ':ObsidianTags<CR>', { desc = 'Show tags' })
+  end,
 }
