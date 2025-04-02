@@ -1,13 +1,17 @@
 return {
-  { -- Autoformat
+  {
     'stevearc/conform.nvim',
     opts = {
       notify_on_error = false,
       format_on_save = function(bufnr)
-        -- Disable "format_on_save lsp_fallback" for languages that don't
-        -- have a well standardized coding style. You can add additional
-        -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = {
+          c = true,
+          cpp = true,
+          -- Consider adding other filetypes that don't have standardized formatting
+          markdown = true,
+          text = true,
+          gitcommit = true,
+        }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -15,12 +19,24 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        -- Add common web development formatters
+        javascript = { { 'prettierd', 'prettier' } },
+        typescript = { { 'prettierd', 'prettier' } },
+        javascriptreact = { { 'prettierd', 'prettier' } },
+        typescriptreact = { { 'prettierd', 'prettier' } },
+        json = { { 'prettierd', 'prettier' } },
+        html = { { 'prettierd', 'prettier' } },
+        css = { { 'prettierd', 'prettier' } },
+        scss = { { 'prettierd', 'prettier' } },
+        -- Python formatting
+        python = { 'ruff_format' }, -- Modern alternative to isort + black
+        -- Shell script formatting
+        sh = { 'shfmt' },
+        bash = { 'shfmt' },
+        -- YAML/JSON formatting
+        yaml = { 'yamlfmt' },
+        -- Catch all files for common issues
+        ['*'] = { 'trim_whitespace', 'trim_newlines' },
       },
     },
   },
