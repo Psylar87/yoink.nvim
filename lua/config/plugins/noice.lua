@@ -3,20 +3,94 @@ return {
     'folke/noice.nvim',
     event = 'VeryLazy',
     opts = {
-      -- add any options here
       presets = {
-        -- disabled for now as it's not working properly
-        -- with blink.cmp, not sure if it be fixed, or if its a skill issue
-        -- on my part
-        -- possible relavent links:
-        -- https://github.com/Saghen/blink.cmp/pull/532
-        -- https://github.com/Saghen/blink.cmp/pull/323
         command_palette = false,
+        long_message_to_split = true,
+        inc_rename = false,
+      },
+      lsp = {
+        hover = {
+          enabled = true,
+          silent = false,
+        },
+        signature = {
+          enabled = true,
+          auto_open = {
+            enabled = true,
+            trigger = true,
+            luasnip = true,
+          },
+        },
+      },
+      messages = {
+        enabled = true,
+        view = 'notify',
+        view_error = 'notify',
+        view_warn = 'notify',
+        view_history = 'messages',
+        view_search = 'virtualtext',
+      },
+      routes = {
+        {
+          filter = {
+            event = 'msg_show',
+            kind = 'search_count',
+          },
+          opts = { skip = true },
+        },
+        {
+          view = 'split',
+          filter = { event = 'msg_show', min_height = 20 },
+        },
       },
     },
     dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
       'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
+    keys = {
+      {
+        '<S-Enter>',
+        function()
+          require('noice').redirect(vim.fn.getcmdline())
+        end,
+        mode = 'c',
+        desc = 'Redirect Cmdline',
+      },
+      {
+        '<leader>nl',
+        function()
+          require('noice').cmd 'last'
+        end,
+        desc = 'Noice Last Message',
+      },
+      {
+        '<leader>nh',
+        function()
+          require('noice').cmd 'history'
+        end,
+        desc = 'Noice History',
+      },
+      {
+        '<C-f>',
+        function()
+          if not require('noice.lsp').scroll(4) then
+            return '<c-f>'
+          end
+        end,
+        mode = { 'i', 'n', 's' },
+        expr = true,
+      },
+      {
+        '<C-b>',
+        function()
+          if not require('noice.lsp').scroll(-4) then
+            return '<c-b>'
+          end
+        end,
+        mode = { 'i', 'n', 's' },
+        expr = true,
+      },
     },
   },
 }
