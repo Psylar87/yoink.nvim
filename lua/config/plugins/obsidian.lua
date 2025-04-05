@@ -4,11 +4,9 @@ local obsidian_config = {
   lazy = false,
   ft = 'markdown',
   dependencies = {
-    -- Required.
     'nvim-lua/plenary.nvim',
   },
   opts = {
-    -- disable ui in favor of render-markdown.nvim
     ui = { enable = false },
     workspaces = {
       {
@@ -38,13 +36,16 @@ local obsidian_config = {
       return out
     end,
   },
+  keys = {
+    { '<leader>of', '<cmd>ObsidianSearch<cr>', desc = 'Search files' },
+    { '<leader>os', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick switch' },
+    { '<leader>on', '<cmd>ObsidianNew<cr>', desc = 'New note' },
+    { '<leader>ol', '<cmd>ObsidianFollowLink<cr>', desc = 'Follow link' },
+    { '<leader>ob', '<cmd>ObsidianBacklinks<cr>', desc = 'Show backlinks' },
+    { '<leader>ot', '<cmd>ObsidianTags<cr>', desc = 'Browse tags' },
+  },
+  config = function(_, opts)
+    require('obsidian').setup(opts)
+  end,
 }
--- Set up keymaps
-vim.keymap.set('n', '<leader>of', ':ObsidianSearch<CR>', { desc = 'Search files' })
-vim.keymap.set('n', '<leader>os', ':ObsidianQuickSwitch<CR>', { desc = 'Quick switch' })
-vim.keymap.set('n', '<leader>on', ':ObsidianNew<CR>', { desc = 'New note' })
-vim.keymap.set('n', '<leader>ol', ':ObsidianFollowLink<CR>', { desc = 'Follow link' })
-vim.keymap.set('n', '<leader>ob', ':ObsidianBacklinks<CR>', { desc = 'Show backlinks' })
-vim.keymap.set('n', '<leader>ot', ':ObsidianTags<CR>', { desc = 'Browse tags' })
-
 return obsidian_config
