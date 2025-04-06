@@ -1,27 +1,48 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
+--------------------------------------------------------------------------------
+-- Leader Key Configuration
+--------------------------------------------------------------------------------
+-- Set <space> as the leader key (must be before plugins load)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
--- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
---  For more options, you can see `:help option-list`
+--------------------------------------------------------------------------------
+-- Performance Optimizations
+--------------------------------------------------------------------------------
+vim.opt.redrawtime = 1500
+vim.opt.synmaxcol = 200
+vim.opt.ttyfast = true
+vim.opt.updatetime = 50
+vim.opt.timeoutlen = 300
 
--- Line numbers and relative numbers
+--------------------------------------------------------------------------------
+-- UI Configuration
+--------------------------------------------------------------------------------
+-- Line numbers and display
 vim.opt.number = true
-vim.opt.relativenumber = false -- Helps with motion commands
+vim.opt.relativenumber = false
+vim.opt.cursorline = true
+vim.opt.signcolumn = 'yes'
+vim.opt.showmode = true
+vim.opt.cmdheight = 2
+vim.opt.scrolloff = 10
+vim.opt.termguicolors = true
+vim.opt.showmatch = false
 
--- Enable mouse mode, can be useful for resizing splits for example!
+-- Status line
+vim.opt.laststatus = 3
+
+-- Whitespace characters
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+--------------------------------------------------------------------------------
+-- Editor Behavior
+--------------------------------------------------------------------------------
+-- Mouse and clipboard
 vim.opt.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.opt.clipboard = 'unnamedplus'
 
 -- Search settings
@@ -29,8 +50,6 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
-
--- Preview substitutions live, as you type
 vim.opt.inccommand = 'split'
 
 -- Tab and indent settings
@@ -40,42 +59,60 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 vim.opt.breakindent = true
 
--- Visual enhancements
-vim.opt.termguicolors = true
-vim.opt.showmatch = false
-vim.opt.signcolumn = 'yes'
-vim.opt.cursorline = true
-vim.opt.showmode = true
-vim.opt.cmdheight = 2
-
--- Sets how neovim will display certain whitespace characters in the editor.
---  See `:help 'list'` and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
--- Configure how new splits should be opened
+-- Split behavior
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.scrolloff = 10
 
--- Performance and history
-vim.opt.updatetime = 50
-vim.opt.timeoutlen = 300
+--------------------------------------------------------------------------------
+-- File Handling
+--------------------------------------------------------------------------------
+-- History and undo
 vim.opt.history = 1000
-
--- File handling
 vim.opt.undofile = true
 vim.opt.undolevels = 1000
 vim.opt.autoread = true
 
--- Status line
-vim.opt.laststatus = 3
+-- Backup handling
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
 
--- Spell checking
+--------------------------------------------------------------------------------
+-- Completion and Wild Menu
+--------------------------------------------------------------------------------
+vim.opt.completeopt = 'menu,menuone,noselect'
+vim.opt.wildmode = 'longest:full,full'
+vim.opt.wildignore:append {
+  '*/node_modules/*',
+  '*.pyc',
+  '*.git/*',
+  '*/vendor/*',
+  '*.zip',
+  '*.png',
+  '*.jpg',
+  '*.gif',
+  '*.pdf',
+  '*.DS_Store',
+  '*/build/*',
+  '*/dist/*',
+}
+
+--------------------------------------------------------------------------------
+-- Fold Settings
+--------------------------------------------------------------------------------
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldenable = false
+vim.opt.foldlevel = 99
+
+--------------------------------------------------------------------------------
+-- Spell Checking
+--------------------------------------------------------------------------------
 vim.opt.spell = true
 vim.opt.spelllang = 'en_us'
 
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
+--------------------------------------------------------------------------------
+-- Basic Keymaps
+--------------------------------------------------------------------------------
 -- Clear search highlighting with <Esc>
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
