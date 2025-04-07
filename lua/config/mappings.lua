@@ -66,10 +66,10 @@ map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Terminal: exit insert mode' })
 --------------------------------------------------------------------------------
 -- Diagnostic Mappings
 --------------------------------------------------------------------------------
-map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show [D]iagnostic message' })
-map('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-map('n', '[d', vim.diagnostic.prev, { desc = 'Previous diagnostic' })
-map('n', ']d', vim.diagnostic.next, { desc = 'Next diagnostic' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 
 --------------------------------------------------------------------------------
 -- Nvim-tree Mappings
