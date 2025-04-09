@@ -50,6 +50,32 @@ return {
           auto_show = true,
           auto_show_delay_ms = 500,
         },
+        ghost_text = { enabled = true },
+        menu = {
+          draw = {
+            columns = {
+              { 'label',     'label_description', gap = 1 },
+              { 'kind_icon', 'kind' },
+            },
+          },
+        },
+      },
+
+      -- Experimental signature help support
+      signature = {
+        enabled = true,
+        window = {
+          show_documentation = true,
+        },
+      },
+
+      fuzzy = {
+        implementation = 'prefer_rust_with_warning',
+        sorts = {
+          'exact', -- prioritize exact matches
+          'score',
+          'sort_text',
+        },
       },
 
       -- Default list of enabled providers defined so that you can extend it
@@ -57,6 +83,26 @@ return {
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
         -- TODO: add providers options and set priority
+        providers = {
+          lsp = {
+            name = 'LSP',
+            fallbacks = { 'buffer' }, -- fallback to buffer when LSP returns no results
+            transform_items = function(_, items)
+              return vim.tbl_filter(function(item)
+                return item.kind ~= require('blink.cmp.types').CompletionItemKind.Text
+              end, items)
+            end,
+          },
+          buffer = {
+            opts = {
+              get_bufnrs = function()
+                return vim.tbl_filter(function(bufnr)
+                  return vim.bo[bufnr].buftype == ''
+                end, vim.api.nvim_list_bufs())
+              end,
+            },
+          },
+        },
       },
     },
     opts_extend = { 'sources.default' },
