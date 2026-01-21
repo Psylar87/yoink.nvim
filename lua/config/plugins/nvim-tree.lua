@@ -1,12 +1,19 @@
 return {
   {
+    'nvim-tree/nvim-web-devicons',
+    lazy = false, -- Ensure devicons load immediately and are not disabled
+  },
+  {
     'nvim-tree/nvim-tree.lua',
     version = '*',
     lazy = false,
     dependencies = {
-      'nvim-tree/nvim-web-devicons',
+      'nvim-tree/nvim-web-devicons', -- Keep as dependency for clarity
     },
     config = function()
+      -- Explicitly setup devicons before nvim-tree config
+      require('nvim-web-devicons').setup()
+
       require('nvim-tree').setup {
         sort = {
           sorter = 'case_sensitive',
@@ -73,3 +80,4 @@ return {
     end,
   },
 }
+
