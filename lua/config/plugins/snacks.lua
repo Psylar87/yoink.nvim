@@ -66,7 +66,7 @@ return {
       mode = { 'n', 'v' },
     },
     {
-      '<leader>gb',
+      '<leader>gl',
       function()
         Snacks.git.blame_line()
       end,

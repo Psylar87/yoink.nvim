@@ -99,10 +99,10 @@ map('n', '<A-q>', '<Cmd>BufferClose<CR>', opts)
 map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
 
 -- Buffer sorting
-map('n', '<Space>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
-map('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
-map('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
-map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
+map('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
+map('n', '<leader>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
+map('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
+map('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
 --------------------------------------------------------------------------------
 -- LSP Mappings (additional)

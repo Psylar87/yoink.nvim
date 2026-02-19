@@ -61,15 +61,13 @@ return {
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        -- Add more key groups to better organize your mappings
         { '<leader>f', group = '[F]ind/Files' },
         { '<leader>g', group = '[G]it' },
         { '<leader>b', group = '[B]uffers' },
+        { '<leader>gl', group = 'Git Blame' },
 
-        -- Add groups for some of the overlapping keys from health check
         { 'g', group = 'Go to/LSP/Comment' },
         { 's', group = 'Surround' },
-        { '<leader>\\e', group = 'Nvimtree' },
       },
 
       -- Add ignore patterns for overlapping keymaps

@@ -157,7 +157,10 @@ return {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            local ok, err = pcall(require('lspconfig')[server_name].setup, server)
+            if not ok then
+              vim.notify(string.format('Failed to setup %s: %s', server_name, err), vim.log.levels.ERROR)
+            end
           end,
         },
       }

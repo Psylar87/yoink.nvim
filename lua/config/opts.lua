@@ -98,17 +98,30 @@ vim.opt.wildignore:append {
 
 --------------------------------------------------------------------------------
 -- Fold Settings
---------------------------------------------------------------------------------
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldexpr = 'vim.treesitter.foldexpr()'
 vim.opt.foldenable = false
 vim.opt.foldlevel = 99
 
 --------------------------------------------------------------------------------
--- Spell Checking
---------------------------------------------------------------------------------
-vim.opt.spell = true
+-- Spell Checking (enabled per filetype via autocmd below)
+vim.opt.spell = false
 vim.opt.spelllang = 'en_us'
+
+-- Enable spell check only for text and markdown files
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'text', 'markdown', 'markdownvimwiki' },
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'gitcommit', 'gitrebase' },
+  callback = function()
+    vim.opt_local.spell = true
+  end,
+})
 
 --------------------------------------------------------------------------------
 -- Basic Keymaps

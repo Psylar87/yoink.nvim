@@ -31,7 +31,7 @@ local obsidian_config = {
         name = 'telescope.nvim',
       },
       legacy_commands = false,
-      note_frontmatter_func = function(note)
+      frontmatter_func = function(note)
         local out = {
           created = os.date '!%Y-%m-%d %H:%M:%S',
           title = note.id,

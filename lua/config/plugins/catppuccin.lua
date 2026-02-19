@@ -10,6 +10,8 @@ return {
           barbar = true,
           which_key = true,
           snacks = true,
+          gitsigns = true,
+          noice = true,
         },
       }
       vim.cmd.colorscheme 'catppuccin-mocha'

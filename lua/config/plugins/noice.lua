@@ -72,20 +72,20 @@ return {
         desc = 'Noice History',
       },
       {
-        '<C-f>',
+        '<M-f>',
         function()
           if not require('noice.lsp').scroll(4) then
-            return '<c-f>'
+            return '<M-f>'
           end
         end,
         mode = { 'i', 'n', 's' },
         expr = true,
       },
       {
-        '<C-b>',
+        '<M-b>',
         function()
           if not require('noice.lsp').scroll(-4) then
-            return '<c-b>'
+            return '<M-b>'
           end
         end,
         mode = { 'i', 'n', 's' },
