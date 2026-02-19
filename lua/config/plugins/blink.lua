@@ -54,7 +54,7 @@ return {
         menu = {
           draw = {
             columns = {
-              { 'label', 'label_description', gap = 1 },
+              { 'label',     'label_description', gap = 1 },
               { 'kind_icon', 'kind' },
             },
           },
@@ -81,9 +81,14 @@ return {
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
         -- TODO: add providers options and set priority
         providers = {
+          lazydev = {
+            name = 'LazyDev',
+            module = 'lazydev.integrations.blink',
+            score_offset = 100,
+          },
           lsp = {
             name = 'LSP',
             fallbacks = { 'buffer' }, -- fallback to buffer when LSP returns no results
