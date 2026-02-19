@@ -102,8 +102,8 @@ return {
               workspace = {
                 library = vim.api.nvim_get_runtime_file('', true),
                 checkThirdParty = false,
-                ['snacks.nvim'] = vim.fn.stdpath('data') .. '/lazy/snacks.nvim/lua',
-                ['blink.cmp'] = vim.fn.stdpath('data') .. '/lazy/blink.cmp/lua',
+                ['snacks.nvim'] = vim.fn.stdpath 'data' .. '/lazy/snacks.nvim/lua',
+                ['blink.cmp'] = vim.fn.stdpath 'data' .. '/lazy/blink.cmp/lua',
               },
               plugin = {
                 ['lazydev.nvim'] = { library = { enabled = true } },
