@@ -23,8 +23,4 @@ require('lazy').setup {
   -- Import Custom Plugins from 'lua/custom/plugins/*.lua'
   --------------------------------------------------------------------------------
   { import = 'config.plugins' },
-  --------------------------------------------------------------------------------
-  -- set keybindings
-  --------------------------------------------------------------------------------
-  vim.keymap.set('n', '<leader>l', ':Lazy<CR>', { noremap = true, silent = true }),
 }
