@@ -13,7 +13,6 @@ vim.g.have_nerd_font = true
 --------------------------------------------------------------------------------
 vim.opt.redrawtime = 1500
 vim.opt.synmaxcol = 200
-vim.opt.ttyfast = true
 vim.opt.updatetime = 50
 vim.opt.timeoutlen = 300
 

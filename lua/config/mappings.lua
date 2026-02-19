@@ -66,7 +66,7 @@ map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Terminal: exit insert mode' })
 --------------------------------------------------------------------------------
 -- Diagnostic Mappings
 --------------------------------------------------------------------------------
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -75,8 +75,8 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 -- Nvim-tree Mappings
 --------------------------------------------------------------------------------
 map('n', '<C-f>', '<cmd>NvimTreeToggle<CR>', { desc = 'Nvimtree Toggle window' })
-map('n', '<leader>e', '<cmd>NvimTreeFocus<CR>', { desc = 'Nvimtree Focus window' })
-map('n', '<leader>ef', '<cmd>NvimTreeFindFile<CR>', { desc = 'Nvimtree Find current file' })
+map('n', '<leader>nt', '<cmd>NvimTreeFocus<CR>', { desc = 'Nvimtree Focus window' })
+map('n', '<leader>nf', '<cmd>NvimTreeFindFile<CR>', { desc = 'Nvimtree Find current file' })
 
 --------------------------------------------------------------------------------
 -- Buffer Management (Barbar)
@@ -105,15 +105,8 @@ map('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
 map('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 
 --------------------------------------------------------------------------------
--- LSP Mappings
+-- LSP Mappings (additional)
 --------------------------------------------------------------------------------
-map('n', 'gd', vim.lsp.buf.definition, { desc = 'Go to [D]efinition' })
-map('n', 'gr', vim.lsp.buf.references, { desc = 'Go to [R]eferences' })
-map('n', 'gD', vim.lsp.buf.declaration, { desc = 'Go to [D]eclaration' })
-map('n', 'gi', vim.lsp.buf.implementation, { desc = 'Go to [I]mplementation' })
-map('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Documentation' })
-map('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code [A]ction' })
-map('n', '<leader>rn', vim.lsp.buf.rename, { desc = '[R]e[n]ame' })
 map('n', '<leader>f', vim.lsp.buf.format, { desc = '[F]ormat code' })
 
 --------------------------------------------------------------------------------

@@ -11,62 +11,8 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
       { 'folke/neodev.nvim', opts = {} },
-      -- Completion Dependencies
-      'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-    },
+   },
     config = function()
-      ----------------------------------------------------------------------------
-      -- Completion Setup
-      ----------------------------------------------------------------------------
-      local cmp = require('cmp')
-      local luasnip = require('luasnip')
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-          }),
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-        }, {
-          { name = 'buffer' },
-          { name = 'path' },
-        }),
-      })
 
       ----------------------------------------------------------------------------
       --  Setup LSP-on-attach Keymappings
@@ -96,7 +42,7 @@ return {
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = event.buf,
               callback = function()
-                vim.lsp.buf.format({ buffer = event.buf })
+                vim.lsp.buf.format { buffer = event.buf }
               end,
             })
           end
@@ -119,7 +65,7 @@ return {
       ----------------------------------------------------------------------------
       --  Extend LSP Capabilities
       ----------------------------------------------------------------------------
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       ----------------------------------------------------------------------------
       --  Servers Configuration
@@ -130,7 +76,7 @@ return {
           settings = {
             ['rust-analyzer'] = {
               checkOnSave = {
-                command = "clippy",
+                command = 'clippy',
               },
             },
           },
@@ -144,7 +90,7 @@ return {
                 globals = { 'vim' },
               },
               workspace = {
-                library = vim.api.nvim_get_runtime_file("", true),
+                library = vim.api.nvim_get_runtime_file('', true),
                 checkThirdParty = false,
               },
             },
@@ -168,7 +114,7 @@ return {
           settings = {
             python = {
               analysis = {
-                typeCheckingMode = "basic",
+                typeCheckingMode = 'basic',
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
               },
@@ -180,15 +126,15 @@ return {
       ----------------------------------------------------------------------------
       --  Mason Setup
       ----------------------------------------------------------------------------
-      require('mason').setup({
+      require('mason').setup {
         ui = {
           icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-          }
-        }
-      })
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗',
+          },
+        },
+      }
 
       require('mason-tool-installer').setup {
         ensure_installed = {
