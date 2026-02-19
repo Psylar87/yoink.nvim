@@ -50,8 +50,6 @@ return {
       doc = {
         enabled = true,
         inline = false,
-        -- render the image in a floating window
-        -- only used if `opts.inline` is disabled
         float = true,
         max_width = 80,
         max_height = 40,
