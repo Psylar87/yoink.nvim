@@ -11,9 +11,8 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
       { 'folke/neodev.nvim', opts = {} },
-   },
+    },
     config = function()
-
       ----------------------------------------------------------------------------
       --  Setup LSP-on-attach Keymappings
       ----------------------------------------------------------------------------

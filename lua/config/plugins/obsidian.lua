@@ -48,12 +48,12 @@ local obsidian_config = {
     }
   end,
   keys = {
-    { '<leader>of', '<cmd>ObsidianSearch<cr>',      desc = 'Search files' },
+    { '<leader>of', '<cmd>ObsidianSearch<cr>', desc = 'Search files' },
     { '<leader>os', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick switch' },
-    { '<leader>on', '<cmd>ObsidianNew<cr>',         desc = 'New note' },
-    { '<leader>ol', '<cmd>ObsidianFollowLink<cr>',  desc = 'Follow link' },
-    { '<leader>ob', '<cmd>ObsidianBacklinks<cr>',   desc = 'Show backlinks' },
-    { '<leader>ot', '<cmd>ObsidianTags<cr>',        desc = 'Browse tags' },
+    { '<leader>on', '<cmd>ObsidianNew<cr>', desc = 'New note' },
+    { '<leader>ol', '<cmd>ObsidianFollowLink<cr>', desc = 'Follow link' },
+    { '<leader>ob', '<cmd>ObsidianBacklinks<cr>', desc = 'Show backlinks' },
+    { '<leader>ot', '<cmd>ObsidianTags<cr>', desc = 'Browse tags' },
   },
   config = function(_, opts)
     -- Ensure opts is called if it's a function
