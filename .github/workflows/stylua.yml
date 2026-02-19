@@ -10,9 +10,14 @@ jobs:
   stylua-check:
     name: Stylua Check
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: JohnnyMorganz/stylua-action@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run Stylua Check
+        uses: JohnnyMorganz/stylua-action@v3
         with:
           version: latest
           args: --check .
+          token: ${{ secrets.GITHUB_TOKEN }}
