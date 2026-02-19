@@ -44,7 +44,7 @@ return {
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- Format on save
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
+          local client = event.client
           if client and client.server_capabilities.documentFormattingProvider then
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = event.buf,

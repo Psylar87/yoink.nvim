@@ -68,9 +68,9 @@ return {
     {
       '<leader>gl',
       function()
-        Snacks.git.blame_line()
+        Snacks.lazygit.log()
       end,
-      desc = 'Git Blame Line',
+      desc = 'Lazygit Log (cwd)',
     },
     {
       '<leader>gf',
