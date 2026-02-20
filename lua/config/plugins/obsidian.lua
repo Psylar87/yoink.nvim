@@ -7,11 +7,12 @@ local obsidian_config = {
     'nvim-lua/plenary.nvim',
   },
   opts = function()
-    -- Ensure the path exists before configuring
-    local obsidian_path = vim.fn.expand '$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/'
+    local obsidian_path = vim.fs.joinpath(
+      vim.env.HOME,
+      'Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/'
+    )
 
-    -- Create directory if it doesn't exist
-    if vim.fn.isdirectory(obsidian_path) == 0 then
+    if not vim.uv.fs_stat(obsidian_path) then
       vim.fn.mkdir(obsidian_path, 'p')
     end
 
@@ -38,7 +39,7 @@ local obsidian_config = {
           aliases = note.aliases,
           tags = note.tags,
         }
-        if note.metadata ~= nil and not vim.tbl_isempty(note.metadata) then
+        if note.metadata ~= nil and next(note.metadata) ~= nil then
           for k, v in pairs(note.metadata) do
             out[k] = v
           end

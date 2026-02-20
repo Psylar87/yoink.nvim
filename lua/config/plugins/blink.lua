@@ -93,17 +93,23 @@ return {
             name = 'LSP',
             fallbacks = { 'buffer' }, -- fallback to buffer when LSP returns no results
             transform_items = function(_, items)
-              return vim.tbl_filter(function(item)
-                return item.kind ~= require('blink.cmp.types').CompletionItemKind.Text
-              end, items)
+              return vim
+                .iter(items)
+                :filter(function(item)
+                  return item.kind ~= require('blink.cmp.types').CompletionItemKind.Text
+                end)
+                :totable()
             end,
           },
           buffer = {
             opts = {
               get_bufnrs = function()
-                return vim.tbl_filter(function(bufnr)
-                  return vim.bo[bufnr].buftype == ''
-                end, vim.api.nvim_list_bufs())
+                return vim
+                  .iter(vim.api.nvim_list_bufs())
+                  :filter(function(bufnr)
+                    return vim.bo[bufnr].buftype == ''
+                  end)
+                  :totable()
               end,
             },
           },

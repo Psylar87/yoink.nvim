@@ -10,7 +10,7 @@ return {
       end
 
       -- Detect if 'nvim-web-devicons' plugin is loaded (as proxy for Nerd Font support)
-      vim.g.have_nerd_font = vim.fn.exists '*nvim_web_devicons' == 1
+      vim.g.have_nerd_font = pcall(require, 'nvim-web-devicons')
 
       -- Setup mini.ai for better text objects
       require('mini.ai').setup {

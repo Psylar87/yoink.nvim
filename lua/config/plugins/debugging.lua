@@ -9,62 +9,37 @@ return {
     'mfussenegger/nvim-dap-python',
   },
   config = function()
-    local status_dap, dap = pcall(require, 'dap')
-    if not status_dap then
+    local ok, dap = pcall(require, 'dap')
+    if not ok then
       vim.notify('DAP not found', vim.log.levels.ERROR)
       return
     end
 
-    local status_dapui, dapui = pcall(require, 'dapui')
-    if not status_dapui then
+    local ok_ui, dapui = pcall(require, 'dapui')
+    if not ok_ui then
       vim.notify('DAP UI not found', vim.log.levels.ERROR)
       return
     end
 
-    -- Setup components
-    dapui.setup {
-      -- Custom UI layout if desired
-      layouts = {
-        {
-          elements = {
-            { id = 'scopes', size = 0.25 },
-            { id = 'breakpoints', size = 0.25 },
-            { id = 'stacks', size = 0.25 },
-            { id = 'watches', size = 0.25 },
-          },
-          size = 40,
-          position = 'left',
-        },
-        {
-          elements = {
-            { id = 'repl', size = 0.5 },
-            { id = 'console', size = 0.5 },
-          },
-          size = 10,
-          position = 'bottom',
-        },
-      },
-    }
+    dapui.setup()
 
-    -- Language-specific setups
     require('dap-go').setup()
 
-    if pcall(require, 'dap-python') then
-      require('dap-python').setup 'python' -- Use system Python or specify path
+    local ok_py, dap_python = pcall(require, 'dap-python')
+    if ok_py then
+      dap_python.setup 'python'
     end
 
-    -- Virtual text for debugging (if installed)
-    if pcall(require, 'nvim-dap-virtual-text') then
-      require('nvim-dap-virtual-text').setup()
+    local ok_vt, dap_vt = pcall(require, 'nvim-dap-virtual-text')
+    if ok_vt then
+      dap_vt.setup { enabled = true }
     end
 
-    -- Mason integration
     require('mason-nvim-dap').setup {
       ensure_installed = { 'python', 'delve', 'codelldb' },
       automatic_installation = true,
     }
 
-    -- UI auto-open/close
     dap.listeners.before.attach.dapui_config = function()
       dapui.open()
     end
@@ -78,37 +53,36 @@ return {
       dapui.close()
     end
 
-    -- Enhanced keymappings
     vim.keymap.set('n', '<Leader>bt', function()
       dap.toggle_breakpoint()
-    end)
+    end, { desc = 'Toggle breakpoint' })
     vim.keymap.set('n', '<Leader>bc', function()
       dap.continue()
-    end)
+    end, { desc = 'Continue debugging' })
     vim.keymap.set('n', '<Leader>bx', function()
       dap.terminate()
-    end)
+    end, { desc = 'Terminate debugging' })
     vim.keymap.set('n', '<Leader>bo', function()
       dap.step_over()
-    end)
+    end, { desc = 'Step over' })
     vim.keymap.set('n', '<Leader>bi', function()
       dap.step_into()
-    end)
+    end, { desc = 'Step into' })
     vim.keymap.set('n', '<Leader>bu', function()
       dap.step_out()
-    end)
+    end, { desc = 'Step out' })
     vim.keymap.set('n', '<Leader>br', function()
       dap.restart()
-    end)
+    end, { desc = 'Restart debugging' })
     vim.keymap.set('n', '<Leader>bC', function()
       vim.ui.input({ prompt = 'Condition: ' }, function(condition)
         if condition then
           dap.set_breakpoint(condition)
         end
       end)
-    end)
+    end, { desc = 'Set conditional breakpoint' })
     vim.keymap.set('n', '<Leader>bv', function()
       dapui.eval()
-    end)
+    end, { desc = 'Evaluate expression' })
   end,
 }

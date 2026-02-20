@@ -1,5 +1,5 @@
 return {
-  --@type LazySpec
+  ---@type LazySpec
   {
     'mikavilpas/yazi.nvim',
     event = 'VeryLazy',
@@ -25,7 +25,7 @@ return {
       {
         '<leader>yh',
         function()
-          vim.cmd.lcd(vim.fn.expand '$HOME')
+          vim.cmd.lcd(vim.env.HOME)
           vim.cmd 'Yazi cwd'
         end,
         desc = 'Open yazi in home directory',
@@ -41,7 +41,7 @@ return {
       {
         '<leader>yw',
         function()
-          vim.cmd.lcd(vim.fn.expand '$HOME/Downloads')
+          vim.cmd.lcd(vim.fs.joinpath(vim.env.HOME, 'Downloads'))
           vim.cmd 'Yazi cwd'
         end,
         desc = 'Open yazi in Downloads directory',
@@ -49,7 +49,7 @@ return {
       {
         '<leader>yk',
         function()
-          vim.cmd.lcd(vim.fn.expand '$HOME/Desktop')
+          vim.cmd.lcd(vim.fs.joinpath(vim.env.HOME, 'Desktop'))
           vim.cmd 'Yazi cwd'
         end,
         desc = 'Open yazi in Desktop directory',
@@ -57,7 +57,7 @@ return {
       {
         '<leader>yc',
         function()
-          vim.cmd.lcd(vim.fn.expand '$HOME/.config')
+          vim.cmd.lcd(vim.fs.joinpath(vim.env.HOME, '.config'))
           vim.cmd 'Yazi cwd'
         end,
         desc = 'Open yazi in .config directory',

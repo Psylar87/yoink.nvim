@@ -10,17 +10,6 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
-      {
-        'folke/lazydev.nvim',
-        ft = 'lua',
-        opts = {
-          library = {
-            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-            { path = 'snacks.nvim', words = { 'Snacks' } },
-            { path = 'blink.cmp', words = { 'blink' } },
-          },
-        },
-      },
     },
     config = function()
       ----------------------------------------------------------------------------
@@ -90,25 +79,6 @@ return {
             },
           },
         },
-        -- Lua
-        lua_ls = {
-          settings = {
-            Lua = {
-              runtime = {
-                version = 'LuaJIT',
-              },
-              diagnostics = {
-                globals = { 'vim', 'Snacks' },
-              },
-              completion = { callSnippet = 'Replace' },
-              workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
-                checkThirdParty = false,
-              },
-              hint = { enable = true },
-            },
-          },
-        },
         -- Bash
         bashls = {},
         -- Go
@@ -174,13 +144,30 @@ return {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            local ok, err = pcall(require('lspconfig')[server_name].setup, server)
-            if not ok then
-              vim.notify(string.format('Failed to setup %s: %s', server_name, err), vim.log.levels.ERROR)
-            end
+            vim.lsp.config(server_name, server)
+            vim.lsp.enable(server_name)
           end,
         },
       }
+
+      vim.lsp.config('lua_ls', {
+        capabilities = capabilities,
+        on_init = function(client)
+          if client.workspace_folders then
+            local path = client.workspace_folders[1].name
+            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
+              return
+            end
+          end
+          client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua or {}, {
+            runtime = { version = 'LuaJIT', path = { 'lua/?.lua', 'lua/?/init.lua' } },
+            workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file('', true) },
+            diagnostics = { globals = { 'vim', 'Snacks' } },
+          })
+        end,
+        settings = { Lua = {} },
+      })
+      vim.lsp.enable 'lua_ls'
     end,
   },
 }

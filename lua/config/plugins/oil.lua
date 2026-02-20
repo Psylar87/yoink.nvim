@@ -2,7 +2,7 @@ return {
   'stevearc/oil.nvim',
   opts = {
     delete_to_trash = true,
-    skip_confrim_from_simple_edits = false,
+    skip_confirm_for_simple_edits = false,
     natural_order = 'fast',
     view_options = {
       show_hidden = true,

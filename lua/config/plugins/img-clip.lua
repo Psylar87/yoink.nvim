@@ -4,7 +4,7 @@ return {
   opts = {
     default = {
       dir_path = function()
-        return vim.fn.expand '%:p:h' .. '/images'
+        return vim.fs.dirname(vim.api.nvim_buf_get_name(0)) .. '/images'
       end,
       extension = 'png',
       file_name = '%Y%m%d-%H%M%S',
