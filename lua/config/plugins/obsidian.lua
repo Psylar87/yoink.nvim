@@ -7,10 +7,7 @@ local obsidian_config = {
     'nvim-lua/plenary.nvim',
   },
   opts = function()
-    local obsidian_path = vim.fs.joinpath(
-      vim.env.HOME,
-      'Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/'
-    )
+    local obsidian_path = vim.fs.joinpath(vim.env.HOME, 'Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/')
 
     if not vim.uv.fs_stat(obsidian_path) then
       vim.fn.mkdir(obsidian_path, 'p')
