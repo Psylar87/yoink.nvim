@@ -1,5 +1,5 @@
 # Yoink.nvim (Multi-File Edition)
-![Yoink](yoink.nvim.png)
+![Yoink](nvim.png)
 ## "Professionally acquired configurations"
 <a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/plugins?style=for-the-badge" /></a>
 <a href="https://dotfyle.com/MillerApps/yoinknvim"><img src="https://dotfyle.com/MillerApps/yoinknvim/badges/leaderkey?style=for-the-badge" /></a>
