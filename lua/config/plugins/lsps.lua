@@ -2,6 +2,7 @@
 -- LSP Configuration & Plugins
 --------------------------------------------------------------------------------
 return {
+  { 'folke/lazydev.nvim', ft = 'lua', opts = {} },
   {
     'neovim/nvim-lspconfig',
     dependencies = {
