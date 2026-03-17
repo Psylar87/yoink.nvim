@@ -2,7 +2,17 @@
 -- LSP Configuration & Plugins
 --------------------------------------------------------------------------------
 return {
-  { 'folke/lazydev.nvim', ft = 'lua', opts = {} },
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        'lazy.nvim',
+        'blink.cmp',
+        'snacks.nvim',
+      },
+    },
+  },
   {
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -35,12 +45,15 @@ return {
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
-          local client = event.client
+          local client = event.data and vim.lsp.get_client_by_id(event.data.client_id) or nil
+          if not client then
+            return
+          end
 
           ----------------------------------------------------------------------------
           -- Format + Go import organize on save
           ----------------------------------------------------------------------------
-          if client and client.server_capabilities.documentFormattingProvider then
+          if client:supports_method 'textDocument/formatting' then
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = event.buf,
               callback = function()
@@ -67,7 +80,7 @@ return {
           ----------------------------------------------------------------------------
           -- Document highlight
           ----------------------------------------------------------------------------
-          if client and client.server_capabilities.documentHighlightProvider then
+          if client:supports_method 'textDocument/documentHighlight' then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               callback = vim.lsp.buf.document_highlight,
@@ -180,9 +193,12 @@ return {
       vim.lsp.config('lua_ls', {
         capabilities = capabilities,
         on_init = function(client)
-          if client.workspace_folders then
-            local path = client.workspace_folders[1].name
-            if path ~= vim.fn.stdpath 'config' and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc')) then
+          local folder = client.workspace_folders and client.workspace_folders[1]
+          local path = folder and folder.name
+          if type(path) == 'string' and path ~= vim.fn.stdpath 'config' then
+            local has_luarc = vim.fn.filereadable(path .. '/.luarc.json') == 1
+              or vim.fn.filereadable(path .. '/.luarc.jsonc') == 1
+            if has_luarc then
               return
             end
           end

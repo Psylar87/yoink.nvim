@@ -11,7 +11,8 @@ return {
     -- If you use nix, you can build from source using latest nightly rust with:
     -- build = 'nix run .#build-plugin',
 
-    ---@module 'blink.cmp'
+    ---@module "blink.cmp"
+    ---@module "blink.cmp.config.types_partial"
     ---@type blink.cmp.Config
     opts = {
       -- 'default' for mappings similar to built-in completion

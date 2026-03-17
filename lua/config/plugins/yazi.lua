@@ -1,5 +1,5 @@
 return {
-  ---@type LazySpec
+  ---@type LazyPluginSpec
   {
     'mikavilpas/yazi.nvim',
     event = 'VeryLazy',

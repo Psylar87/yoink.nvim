@@ -2,6 +2,7 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  ---@module "snacks"
   ---@type snacks.Config
   opts = {
     dim = { enabled = false },
@@ -22,7 +23,7 @@ return {
       config = {
         gui = {
           theme = {
-            activeBorderColor = { '#74c7ec' },
+            activeBorderColor = { fg = 'FloatBorder' },
           },
         },
       },
