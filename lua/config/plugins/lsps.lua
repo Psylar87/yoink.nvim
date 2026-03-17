@@ -196,8 +196,7 @@ return {
           local folder = client.workspace_folders and client.workspace_folders[1]
           local path = folder and folder.name
           if type(path) == 'string' and path ~= vim.fn.stdpath 'config' then
-            local has_luarc = vim.fn.filereadable(path .. '/.luarc.json') == 1
-              or vim.fn.filereadable(path .. '/.luarc.jsonc') == 1
+            local has_luarc = vim.fn.filereadable(path .. '/.luarc.json') == 1 or vim.fn.filereadable(path .. '/.luarc.jsonc') == 1
             if has_luarc then
               return
             end
