@@ -50,7 +50,7 @@ When you run nvim-Yoink, it will use `~/.config/nvim-Yoink` and `~/.local/share/
 
 ## Install Instructions
 
- > Install requires Neovim 0.9+. Always review the code before installing a configuration.
+ > Install requires Neovim 0.11+. Always review the code before installing a configuration.
 
 Clone the repository and install the plugins:
 
@@ -115,7 +115,7 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 | Key | Action |
 |-----|--------|
 | `<leader>ee` | Show diagnostic float |
-| `<leader>q` | Open diagnostic quickfix |
+| `<leader>q` | Open diagnostic location list |
 | `[d` / `]d` | Previous/Next diagnostic |
 
 ### File Explorer (nvim-tree)
@@ -136,8 +136,9 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 | `<A-q>` | Close buffer |
 | `<C-p>` | Pick buffer |
 | `<leader>bb` | Sort by buffer number |
-| `<leader>bd` | Sort by directory |
+| `<leader>bod` | Sort by directory |
 | `<leader>bl` | Sort by language |
+| `<leader>bw` | Sort by window number |
 
 ### Git (Gitsigns)
 | Key | Action |
@@ -263,7 +264,7 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 + [3rd/image.nvim](https://dotfyle.com/plugins/3rd/image.nvim)
 
 ### note-taking
-+ [epwalsh/obsidian.nvim](https://dotfyle.com/plugins/epwalsh/obsidian.nvim)
++ [obsidian-nvim/obsidian.nvim](https://dotfyle.com/plugins/obsidian-nvim/obsidian.nvim)
 
 ### nvim-dev
 + [nvim-lua/plenary.nvim](https://dotfyle.com/plugins/nvim-lua/plenary.nvim)

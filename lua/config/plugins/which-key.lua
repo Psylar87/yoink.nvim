@@ -40,19 +40,19 @@ return {
         },
       },
 
-      -- Use win instead of window (fixed deprecated option)
+      -- Popup window options
       win = {
         border = 'none', -- none, single, double, shadow
         padding = { 1, 1, 1, 1 },
       },
 
-      -- Add sorting options
+      -- Mapping sort behavior
       sort = {
         enable = true, -- enable sorting
         order = 'local', -- order mappings by 'local', 'group', or 'alpha'
       },
 
-      -- Document existing key chains
+      -- Group labels for key prefixes
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
         { '<leader>d', group = '[D]ocument' },
@@ -64,13 +64,13 @@ return {
         { '<leader>f', group = '[F]ind/Files' },
         { '<leader>g', group = '[G]it' },
         { '<leader>b', group = '[B]uffers' },
-        { '<leader>gl', group = 'Git Blame' },
+        { '<leader>gl', group = 'Lazygit Log' },
 
         { 'g', group = 'Go to/LSP/Comment' },
         { 's', group = 'Surround' },
       },
 
-      -- Add ignore patterns for overlapping keymaps
+      -- Ignore noisy contexts
       ignore = {
         -- Ignore specific buffer types
         buftypes = { 'nofile', 'prompt', 'help' },
@@ -78,7 +78,7 @@ return {
         filetypes = { 'TelescopePrompt' },
       },
 
-      -- Add plugins section for specific plugin configurations
+      -- Built-in helper panels
       plugins = {
         marks = true, -- shows a list of your marks on ' and `
         registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
@@ -86,7 +86,7 @@ return {
           enabled = false, -- enabling this will show WhichKey when pressing z= to select spelling suggestions
           suggestions = 20, -- how many suggestions should be shown in the list?
         },
-        -- Add presets for improved visibility of certain key groups
+        -- Preset key-group helpers
         presets = {
           operators = true, -- adds help for operators like d, y, ...
           motions = true, -- adds help for motions
@@ -98,7 +98,7 @@ return {
         },
       },
 
-      -- Add key timeout settings
+      -- Prefix trigger timing
       timeout = {
         timeout = 300, -- timeout in ms
         trigger_on_keys = true, -- automatically show menu when typing a prefix key

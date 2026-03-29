@@ -23,6 +23,27 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
+      local function setup_server(server_name, server_config)
+        if vim.lsp.config and type(vim.lsp.enable) == 'function' then
+          local ok = pcall(vim.lsp.config, server_name, server_config)
+          if ok then
+            vim.lsp.enable(server_name)
+            return
+          end
+        end
+
+        if type(vim.lsp.enable) == 'function' and type(vim.lsp.config) == 'table' then
+          vim.lsp.config[server_name] = server_config
+          vim.lsp.enable(server_name)
+          return
+        end
+
+        local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
+        if ok_lspconfig and lspconfig[server_name] then
+          lspconfig[server_name].setup(server_config)
+        end
+      end
+
       ----------------------------------------------------------------------------
       --  Setup LSP-on-attach Keymappings
       ----------------------------------------------------------------------------
@@ -30,7 +51,7 @@ return {
         group = vim.api.nvim_create_augroup('user-lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc)
-            vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+            vim.keymap.set('n', keys, func, { buf = event.buf, desc = 'LSP: ' .. desc })
           end
 
           -- Keymaps
@@ -59,14 +80,15 @@ return {
               callback = function()
                 -- Go: organize imports first
                 if client.name == 'gopls' then
-                  local params = vim.lsp.util.make_range_params()
+                  local encoding = client.offset_encoding or 'utf-16'
+                  local params = vim.lsp.util.make_range_params(nil, encoding)
                   params.context = { only = { 'source.organizeImports' } }
 
                   local result = vim.lsp.buf_request_sync(event.buf, 'textDocument/codeAction', params, 1000)
                   for _, res in pairs(result or {}) do
                     for _, r in pairs(res.result or {}) do
                       if r.edit then
-                        vim.lsp.util.apply_workspace_edit(r.edit, 'utf-16')
+                        vim.lsp.util.apply_workspace_edit(r.edit, encoding)
                       end
                     end
                   end
@@ -181,8 +203,7 @@ return {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            vim.lsp.config(server_name, server)
-            vim.lsp.enable(server_name)
+            setup_server(server_name, server)
           end,
         },
       }
@@ -190,7 +211,7 @@ return {
       ----------------------------------------------------------------------------
       -- Lua LSP
       ----------------------------------------------------------------------------
-      vim.lsp.config('lua_ls', {
+      setup_server('lua_ls', {
         capabilities = capabilities,
         on_init = function(client)
           local folder = client.workspace_folders and client.workspace_folders[1]
@@ -210,7 +231,6 @@ return {
         end,
         settings = { Lua = {} },
       })
-      vim.lsp.enable 'lua_ls'
 
       ----------------------------------------------------------------------------
       -- Optional: Go test shortcut

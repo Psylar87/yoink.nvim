@@ -1,5 +1,22 @@
 return {
   'stevearc/oil.nvim',
+  keys = {
+    {
+      '-',
+      function()
+        require('oil').open_float()
+      end,
+      desc = 'Open parent directory in float',
+    },
+    {
+      '_',
+      function()
+        require('oil').open_float(nil, { preview = { vertical = true } })
+      end,
+      desc = 'Open parent directory in float with preview',
+    },
+  },
+  cmd = { 'Oil' },
   opts = {
     delete_to_trash = true,
     skip_confirm_for_simple_edits = false,
@@ -21,16 +38,7 @@ return {
       ['<Esc>'] = 'actions.close',
     },
   },
-  lazy = false,
   config = function(_, opts)
     require('oil').setup(opts)
-
-    vim.keymap.set('n', '-', function()
-      require('oil').open_float()
-    end, { desc = 'Open parent directory in float' })
-
-    vim.keymap.set('n', '_', function()
-      require('oil').open_float(nil, { preview = { vertical = true } })
-    end, { desc = 'Open parent directory in float with preview' })
   end,
 }

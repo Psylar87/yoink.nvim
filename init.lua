@@ -1,7 +1,7 @@
--- Add startup time profiling
+-- Track startup time
 local startup_time = vim.fn.reltime()
 
--- Add better error handling for requires
+-- Wrap requires with notifications on failure
 local function safe_require(module)
   local ok, result = pcall(require, module)
   if not ok then
@@ -16,15 +16,14 @@ for _, module in ipairs { 'config.mappings', 'config.opts', 'config.lazy' } do
   safe_require(module)
 end
 
--- Improved nvim-tree autostart
+-- Open nvim-tree on empty start
 vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
-    -- Check if we're not opening a file
+    -- Only run when no file arguments were passed
     if vim.fn.argc() == 0 then
       vim.defer_fn(function()
-        local tree_api = require 'nvim-tree.api'
-        if tree_api then
-          tree_api.tree.open()
+        local ok = pcall(vim.cmd, 'NvimTreeOpen')
+        if ok then
           vim.cmd 'wincmd p'
         end
       end, 100)
@@ -32,7 +31,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
 })
 
--- Report startup time
+-- Report startup time once UI is ready
 vim.api.nvim_create_autocmd('UIEnter', {
   callback = function()
     local elapsed = vim.fn.reltimefloat(vim.fn.reltime(startup_time)) * 1000
