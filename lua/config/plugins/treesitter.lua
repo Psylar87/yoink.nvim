@@ -1,7 +1,6 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
-    branch = 'fix/nightly',
     build = ':TSUpdate',
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
@@ -12,6 +11,9 @@ return {
         enabled = vim.fn.has 'nvim-0.12' == 0,
       },
     },
+    config = function(_, opts)
+      require('nvim-treesitter.configs').setup(opts)
+    end,
     opts = function()
       local nvim_012_or_newer = vim.fn.has 'nvim-0.12' == 1
 

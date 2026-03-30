@@ -5,6 +5,25 @@ local startup_time = vim.fn.reltime()
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Temporary Neovim 0.12 markdown Treesitter compatibility guard
+if vim.fn.has 'nvim-0.12' == 1 and vim.treesitter and vim.treesitter.start then
+  local treesitter_start = vim.treesitter.start
+
+  vim.treesitter.start = function(bufnr, lang)
+    local target_buf = bufnr or 0
+    if target_buf == 0 then
+      target_buf = vim.api.nvim_get_current_buf()
+    end
+
+    local target_lang = lang or vim.bo[target_buf].filetype
+    if target_lang == 'markdown' or target_lang == 'markdown_inline' then
+      return false
+    end
+
+    return treesitter_start(bufnr, lang)
+  end
+end
+
 -- Wrap requires with notifications on failure
 local function safe_require(module)
   local ok, result = pcall(require, module)
