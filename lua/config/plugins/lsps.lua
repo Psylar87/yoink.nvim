@@ -199,6 +199,7 @@ return {
 
       require('mason-lspconfig').setup {
         ensure_installed = vim.tbl_keys(servers),
+        automatic_enable = vim.tbl_keys(servers),
         handlers = {
           function(server_name)
             if servers[server_name] == nil then
