@@ -201,6 +201,10 @@ return {
         ensure_installed = vim.tbl_keys(servers),
         handlers = {
           function(server_name)
+            if servers[server_name] == nil then
+              return
+            end
+
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             setup_server(server_name, server)
