@@ -8,74 +8,80 @@ return {
       'windwp/nvim-ts-autotag',
       'JoosepAlviste/nvim-ts-context-commentstring',
     },
-    opts = {
-      ensure_installed = {
-        'bash',
-        'c',
-        'html',
-        'javascript',
-        'json',
-        'lua',
-        'markdown',
-        'python',
-        'query',
-        'regex',
-        'tsx',
-        'typescript',
-        'vim',
-        'yaml',
-        'rust',
-        'go',
-      },
-      sync_install = false,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = { 'ruby', 'markdown' },
-      },
-      indent = { enable = true, disable = { 'ruby', 'python' } },
-      autotag = { enable = true },
-      context_commentstring = { enable = true },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = '<C-space>',
-          node_incremental = '<C-space>',
-          scope_incremental = '<C-s>',
-          node_decremental = '<C-backspace>',
+    opts = function()
+      local nvim_012_or_newer = vim.fn.has 'nvim-0.12' == 1
+
+      return {
+        ensure_installed = {
+          'bash',
+          'c',
+          'html',
+          'javascript',
+          'json',
+          'lua',
+          'markdown',
+          'markdown_inline',
+          'python',
+          'query',
+          'regex',
+          'tsx',
+          'typescript',
+          'vim',
+          'yaml',
+          'rust',
+          'go',
         },
-      },
-      textobjects = {
-        select = {
+        sync_install = false,
+        highlight = {
           enable = true,
-          lookahead = true,
+          disable = nvim_012_or_newer and { 'markdown', 'markdown_inline' } or {},
+          additional_vim_regex_highlighting = { 'ruby', 'markdown' },
+        },
+        indent = { enable = true, disable = { 'ruby', 'python' } },
+        autotag = { enable = true },
+        context_commentstring = { enable = true },
+        incremental_selection = {
+          enable = true,
           keymaps = {
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
+            init_selection = '<C-space>',
+            node_incremental = '<C-space>',
+            scope_incremental = '<C-s>',
+            node_decremental = '<C-backspace>',
           },
         },
-        move = {
-          enable = true,
-          set_jumps = true,
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
+        textobjects = {
+          select = {
+            enable = true,
+            lookahead = true,
+            keymaps = {
+              ['af'] = '@function.outer',
+              ['if'] = '@function.inner',
+              ['ac'] = '@class.outer',
+              ['ic'] = '@class.inner',
+            },
           },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              [']m'] = '@function.outer',
+              [']]'] = '@class.outer',
+            },
+            goto_next_end = {
+              [']M'] = '@function.outer',
+              [']['] = '@class.outer',
+            },
+            goto_previous_start = {
+              ['[m'] = '@function.outer',
+              ['[['] = '@class.outer',
+            },
+            goto_previous_end = {
+              ['[M'] = '@function.outer',
+              ['[]'] = '@class.outer',
+            },
           },
         },
-      },
-    },
+      }
+    end,
   },
 }

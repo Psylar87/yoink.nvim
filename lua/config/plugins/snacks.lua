@@ -1,3 +1,5 @@
+local nvim_012_or_newer = vim.fn.has 'nvim-0.12' == 1
+
 return {
   'folke/snacks.nvim',
   priority = 1000,
@@ -35,7 +37,7 @@ return {
       enabled = true,
       example = 'compact_files',
     },
-    indent = { enabled = true },
+    indent = { enabled = not nvim_012_or_newer },
     input = { enabled = true },
     --    notifier = { enabled = true },
     quickfile = { enabled = false },
@@ -49,7 +51,7 @@ return {
     image = {
       enabled = true,
       doc = {
-        enabled = true,
+        enabled = not nvim_012_or_newer,
         inline = false,
         float = true,
         max_width = 80,

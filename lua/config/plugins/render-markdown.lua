@@ -1,6 +1,7 @@
 return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
+    enabled = vim.fn.has 'nvim-0.12' == 0,
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
       'echasnovski/mini.nvim',
