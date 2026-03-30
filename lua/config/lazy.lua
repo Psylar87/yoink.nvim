@@ -20,7 +20,7 @@ require('lazy').setup {
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
   --------------------------------------------------------------------------------
-  -- Import Custom Plugins from 'lua/custom/plugins/*.lua'
+  -- Import plugin specs from 'lua/config/plugins/*.lua'
   --------------------------------------------------------------------------------
   { import = 'config.plugins' },
 }

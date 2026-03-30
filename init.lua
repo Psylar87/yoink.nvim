@@ -1,6 +1,10 @@
 -- Track startup time
 local startup_time = vim.fn.reltime()
 
+-- Set leaders before loading mappings/plugins
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 -- Wrap requires with notifications on failure
 local function safe_require(module)
   local ok, result = pcall(require, module)
@@ -12,7 +16,7 @@ local function safe_require(module)
 end
 
 -- Core configuration
-for _, module in ipairs { 'config.mappings', 'config.opts', 'config.lazy' } do
+for _, module in ipairs { 'config.opts', 'config.mappings', 'config.lazy' } do
   safe_require(module)
 end
 
