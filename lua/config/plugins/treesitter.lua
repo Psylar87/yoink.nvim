@@ -1,12 +1,16 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = 'fix/nightly',
     build = ':TSUpdate',
     event = { 'BufReadPost', 'BufNewFile' },
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'windwp/nvim-ts-autotag',
-      'JoosepAlviste/nvim-ts-context-commentstring',
+      {
+        'JoosepAlviste/nvim-ts-context-commentstring',
+        enabled = vim.fn.has 'nvim-0.12' == 0,
+      },
     },
     opts = function()
       local nvim_012_or_newer = vim.fn.has 'nvim-0.12' == 1
@@ -39,7 +43,7 @@ return {
         },
         indent = { enable = true, disable = { 'ruby', 'python' } },
         autotag = { enable = true },
-        context_commentstring = { enable = true },
+        context_commentstring = { enable = not nvim_012_or_newer },
         incremental_selection = {
           enable = true,
           keymaps = {
