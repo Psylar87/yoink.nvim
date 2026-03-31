@@ -1,6 +1,9 @@
 -- Track startup time
 local startup_time = vim.fn.reltime()
 
+local open_tree_on_start = vim.g.yoink_open_tree_on_start ~= false
+local notify_startup_time = vim.g.yoink_notify_startup_time ~= false
+
 -- Set leaders before loading mappings/plugins
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -40,24 +43,30 @@ for _, module in ipairs { 'config.opts', 'config.mappings', 'config.lazy' } do
 end
 
 -- Open nvim-tree on empty start
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    -- Only run when no file arguments were passed
-    if vim.fn.argc() == 0 then
-      vim.defer_fn(function()
-        local ok = pcall(vim.cmd, 'NvimTreeOpen')
-        if ok then
-          vim.cmd 'wincmd p'
-        end
-      end, 100)
-    end
-  end,
-})
+if open_tree_on_start then
+  vim.api.nvim_create_autocmd('VimEnter', {
+    callback = function()
+      -- Only run when no file arguments were passed
+      if vim.fn.argc() == 0 then
+        vim.defer_fn(function()
+          local ok = pcall(function()
+            vim.cmd 'NvimTreeOpen'
+          end)
+          if ok then
+            vim.cmd 'wincmd p'
+          end
+        end, 100)
+      end
+    end,
+  })
+end
 
 -- Report startup time once UI is ready
-vim.api.nvim_create_autocmd('UIEnter', {
-  callback = function()
-    local elapsed = vim.fn.reltimefloat(vim.fn.reltime(startup_time)) * 1000
-    vim.notify(string.format('Neovim loaded in %.2f ms', elapsed))
-  end,
-})
+if notify_startup_time then
+  vim.api.nvim_create_autocmd('UIEnter', {
+    callback = function()
+      local elapsed = vim.fn.reltimefloat(vim.fn.reltime(startup_time)) * 1000
+      vim.notify(string.format('Neovim loaded in %.2f ms', elapsed))
+    end,
+  })
+end

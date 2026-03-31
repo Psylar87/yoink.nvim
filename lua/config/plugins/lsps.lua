@@ -72,29 +72,28 @@ return {
           end
 
           ----------------------------------------------------------------------------
-          -- Format + Go import organize on save
+          -- Go import organize on save
           ----------------------------------------------------------------------------
-          if client:supports_method 'textDocument/formatting' then
+          if client.name == 'gopls' then
             vim.api.nvim_create_autocmd('BufWritePre', {
               buffer = event.buf,
               callback = function()
-                -- Go: organize imports first
-                if client.name == 'gopls' then
-                  local encoding = client.offset_encoding or 'utf-16'
-                  local params = vim.lsp.util.make_range_params(nil, encoding)
-                  params.context = { only = { 'source.organizeImports' } }
+                local encoding = client.offset_encoding or 'utf-16'
+                local params = vim.lsp.util.make_range_params(nil, encoding)
+                params.context = { only = { 'source.organizeImports' } }
 
-                  local result = vim.lsp.buf_request_sync(event.buf, 'textDocument/codeAction', params, 1000)
-                  for _, res in pairs(result or {}) do
-                    for _, r in pairs(res.result or {}) do
-                      if r.edit then
-                        vim.lsp.util.apply_workspace_edit(r.edit, encoding)
-                      end
+                local result = vim.lsp.buf_request_sync(event.buf, 'textDocument/codeAction', params, 1000)
+                for _, res in pairs(result or {}) do
+                  for _, r in pairs(res.result or {}) do
+                    if r.edit then
+                      vim.lsp.util.apply_workspace_edit(r.edit, encoding)
+                    end
+
+                    if r.command then
+                      vim.lsp.buf.execute_command(r.command)
                     end
                   end
                 end
-
-                vim.lsp.buf.format { buffer = event.buf }
               end,
             })
           end

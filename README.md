@@ -115,7 +115,7 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 | Key | Action |
 |-----|--------|
 | `<leader>ee` | Show diagnostic float |
-| `<leader>q` | Open diagnostic location list |
+| `<leader>qd` | Open diagnostic location list |
 | `[d` / `]d` | Previous/Next diagnostic |
 
 ### File Explorer (nvim-tree)
@@ -231,7 +231,6 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 
 ### file-explorer
 + [nvim-tree/nvim-tree.lua](https://dotfyle.com/plugins/nvim-tree/nvim-tree.lua)
-+ [stevearc/oil.nvim](https://dotfyle.com/plugins/stevearc/oil.nvim)
 + [mikavilpas/yazi.nvim](https://dotfyle.com/plugins/mikavilpas/yazi.nvim)
 
 ### formatting

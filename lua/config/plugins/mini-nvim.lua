@@ -9,9 +9,6 @@ return {
         end
       end
 
-      -- Detect if 'nvim-web-devicons' plugin is loaded (as proxy for Nerd Font support)
-      vim.g.have_nerd_font = pcall(require, 'nvim-web-devicons')
-
       -- Setup mini.ai for better text objects
       require('mini.ai').setup {
         n_lines = 300, -- balanced for performance and functionality
@@ -116,7 +113,6 @@ return {
 
       -- Additional mini.nvim modules with default setups
       require('mini.bracketed').setup()
-      require('mini.clue').setup()
       require('mini.hipatterns').setup()
       require('mini.splitjoin').setup()
       require('mini.visits').setup()

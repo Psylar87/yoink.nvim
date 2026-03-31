@@ -72,7 +72,7 @@ map('t', '<Esc>', '<C-\\><C-n>', { desc = 'Terminal: exit insert mode' })
 -- Diagnostic Mappings
 --------------------------------------------------------------------------------
 vim.keymap.set('n', '<leader>ee', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q] location list' })
+vim.keymap.set('n', '<leader>qd', vim.diagnostic.setloclist, { desc = 'Open [Q]uick diagnostic location list' })
 vim.keymap.set('n', '[d', function()
   vim.diagnostic.jump { count = -1 }
 end, { desc = 'Go to previous [D]iagnostic message' })
