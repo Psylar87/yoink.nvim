@@ -40,13 +40,12 @@ rm -rf ~/.local/share/nvim/
 >
 > A: Yes! Set `$NVIM_APPNAME`. For example:
 
-# Install this config in `~/.config/nvim-Yoink`
-# Then create an alias:
+Install this config in `~/.config/nvim-yoink`, then create an alias:
 
 ```sh
-alias nvim-Yoink='NVIM_APPNAME="nvim-Yoink" nvim'
+alias nvim-yoink='NVIM_APPNAME="nvim-yoink" nvim'
 ```
-When you run nvim-Yoink, it will use `~/.config/nvim-Yoink` and `~/.local/share/nvim-Yoink`.
+When you run `nvim-yoink`, it will use `~/.config/nvim-yoink` and `~/.local/share/nvim-yoink`.
 
 ## Install Instructions
 
@@ -55,14 +54,42 @@ When you run nvim-Yoink, it will use `~/.config/nvim-Yoink` and `~/.local/share/
 Clone the repository and install the plugins:
 
 ```sh
-git clone git@github.com:MillerApps/yoink.nvim ~/.config/MillerApps/yoink.nvim
+git clone git@github.com:Psylar87/yoink.nvim.git ~/.config/nvim
 ```
 
 Open Neovim with this config:
 
 ```sh
-NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
+nvim
 ```
+
+If you want to run this config side-by-side with another setup:
+
+```sh
+git clone git@github.com:Psylar87/yoink.nvim.git ~/.config/nvim-yoink
+NVIM_APPNAME=nvim-yoink nvim
+```
+
+## Startup / Loading Notes
+
+- Telescope and DAP load on demand from keys/commands (faster startup).
+- Gitsigns and Conform load when opening/creating files.
+- Mason tool installer no longer auto-runs at startup (`run_on_start = false`).
+
+## Yoink Quick Start
+
+Your "I just opened Neovim, let's go" keys:
+
+| Key | Action |
+|-----|--------|
+| `<C-f>` | Toggle NvimTree |
+| `<leader>nt` | Focus NvimTree |
+| `<leader>sf` | Telescope find files |
+| `<leader>sg` | Telescope live grep |
+| `<leader>gg` | Open Lazygit |
+| `<leader>f` | Format current buffer |
+| `<leader>bd` | Delete buffer (mini.bufremove) |
+| `<leader>on` | New Obsidian note |
 
 ## Keybindings
 
@@ -110,6 +137,7 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 | `<leader>ds` | Document Symbols |
 | `<leader>ws` | Workspace Symbols |
 | `<leader>f` | Format code |
+| `<leader>gt` | Go: run all tests |
 
 ### Diagnostics
 | Key | Action |
@@ -157,6 +185,28 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 | `<leader>gf` | Lazygit file history |
 | `<leader>gB` | Git browse (open in browser) |
 
+### Obsidian
+| Key | Action |
+|-----|--------|
+| `<leader>of` | Search notes |
+| `<leader>os` | Quick switch note |
+| `<leader>on` | New note |
+| `<leader>ol` | Follow link |
+| `<leader>ob` | Show backlinks |
+| `<leader>ot` | Browse tags |
+
+### Yazi
+| Key | Action |
+|-----|--------|
+| `<leader>-` | Open yazi at current file |
+| `<leader>cw` | Open yazi in current working directory |
+| `<C-y>` | Resume/toggle last yazi session |
+| `<leader>yh` | Open yazi in home directory |
+| `<leader>yn` | Open yazi in Neovim config directory |
+| `<leader>yw` | Open yazi in Downloads |
+| `<leader>yk` | Open yazi in Desktop |
+| `<leader>yc` | Open yazi in `.config` |
+
 ### Debugging (DAP)
 | Key | Action |
 |-----|--------|
@@ -198,6 +248,19 @@ NVIM_APPNAME=MillerApps/yoink.nvim/ nvim
 | `<A-t>` | Toggle terminal |
 | `<Esc>` | Exit terminal mode |
 | `<C-h/j/k/l>` | Navigate from terminal |
+
+### Snacks (UI Helpers)
+| Key | Action |
+|-----|--------|
+| `<leader>un` | Dismiss all notifications |
+| `<leader>dd` | Dim on |
+| `<leader>do` | Dim off |
+
+### Noice
+| Key | Action |
+|-----|--------|
+| `<leader>nl` | Show last Noice message |
+| `<leader>nh` | Show Noice history |
 
 ### Quickfix
 | Key | Action |
