@@ -7,9 +7,18 @@ local obsidian_config = {
   },
   opts = function()
     local obsidian_path = vim.fs.joinpath(vim.env.HOME, 'Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/')
+    local fallback_path = vim.fs.joinpath(vim.fn.stdpath 'data', 'obsidian', 'Dev')
 
     if not vim.uv.fs_stat(obsidian_path) then
-      vim.fn.mkdir(obsidian_path, 'p')
+      pcall(vim.fn.mkdir, obsidian_path, 'p')
+    end
+
+    if not vim.uv.fs_stat(obsidian_path) then
+      vim.notify('Obsidian iCloud path unavailable, using local fallback vault', vim.log.levels.WARN)
+      if not vim.uv.fs_stat(fallback_path) then
+        pcall(vim.fn.mkdir, fallback_path, 'p')
+      end
+      obsidian_path = fallback_path
     end
 
     return {

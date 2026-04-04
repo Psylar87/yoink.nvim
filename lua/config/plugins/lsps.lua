@@ -75,7 +75,9 @@ return {
           -- Go import organize on save
           ----------------------------------------------------------------------------
           if client.name == 'gopls' then
+            local go_imports_group = vim.api.nvim_create_augroup('user-lsp-go-imports-' .. event.buf, { clear = true })
             vim.api.nvim_create_autocmd('BufWritePre', {
+              group = go_imports_group,
               buffer = event.buf,
               callback = function()
                 local encoding = client.offset_encoding or 'utf-16'
@@ -193,7 +195,7 @@ return {
           'golangci-lint',
         },
         auto_update = false,
-        run_on_start = true,
+        run_on_start = false,
       }
 
       require('mason-lspconfig').setup {

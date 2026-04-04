@@ -1,6 +1,7 @@
 return {
   {
     'stevearc/conform.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     opts = {
       format_on_save = function(bufnr)
         local disable_filetypes = {

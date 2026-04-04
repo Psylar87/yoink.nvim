@@ -1,5 +1,74 @@
 return {
   'mfussenegger/nvim-dap',
+  keys = {
+    {
+      '<Leader>bt',
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      desc = 'Toggle breakpoint',
+    },
+    {
+      '<Leader>bc',
+      function()
+        require('dap').continue()
+      end,
+      desc = 'Continue debugging',
+    },
+    {
+      '<Leader>bx',
+      function()
+        require('dap').terminate()
+      end,
+      desc = 'Terminate debugging',
+    },
+    {
+      '<Leader>bo',
+      function()
+        require('dap').step_over()
+      end,
+      desc = 'Step over',
+    },
+    {
+      '<Leader>bi',
+      function()
+        require('dap').step_into()
+      end,
+      desc = 'Step into',
+    },
+    {
+      '<Leader>bu',
+      function()
+        require('dap').step_out()
+      end,
+      desc = 'Step out',
+    },
+    {
+      '<Leader>br',
+      function()
+        require('dap').restart()
+      end,
+      desc = 'Restart debugging',
+    },
+    {
+      '<Leader>bC',
+      function()
+        vim.ui.input({ prompt = 'Condition: ' }, function(condition)
+          if condition then
+            require('dap').set_breakpoint(condition)
+          end
+        end)
+      end,
+      desc = 'Set conditional breakpoint',
+    },
+    {
+      '<Leader>bv',
+      function()
+        require('dapui').eval()
+      end,
+      desc = 'Evaluate expression',
+    },
+  },
   dependencies = {
     'leoluz/nvim-dap-go',
     'rcarriga/nvim-dap-ui',
@@ -53,36 +122,5 @@ return {
       dapui.close()
     end
 
-    vim.keymap.set('n', '<Leader>bt', function()
-      dap.toggle_breakpoint()
-    end, { desc = 'Toggle breakpoint' })
-    vim.keymap.set('n', '<Leader>bc', function()
-      dap.continue()
-    end, { desc = 'Continue debugging' })
-    vim.keymap.set('n', '<Leader>bx', function()
-      dap.terminate()
-    end, { desc = 'Terminate debugging' })
-    vim.keymap.set('n', '<Leader>bo', function()
-      dap.step_over()
-    end, { desc = 'Step over' })
-    vim.keymap.set('n', '<Leader>bi', function()
-      dap.step_into()
-    end, { desc = 'Step into' })
-    vim.keymap.set('n', '<Leader>bu', function()
-      dap.step_out()
-    end, { desc = 'Step out' })
-    vim.keymap.set('n', '<Leader>br', function()
-      dap.restart()
-    end, { desc = 'Restart debugging' })
-    vim.keymap.set('n', '<Leader>bC', function()
-      vim.ui.input({ prompt = 'Condition: ' }, function(condition)
-        if condition then
-          dap.set_breakpoint(condition)
-        end
-      end)
-    end, { desc = 'Set conditional breakpoint' })
-    vim.keymap.set('n', '<Leader>bv', function()
-      dapui.eval()
-    end, { desc = 'Evaluate expression' })
   end,
 }

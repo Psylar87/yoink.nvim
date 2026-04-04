@@ -39,7 +39,7 @@ return {
     },
     indent = { enabled = not nvim_012_or_newer },
     input = { enabled = true },
-    --    notifier = { enabled = true },
+    notifier = { enabled = true },
     quickfile = { enabled = false },
     scroll = { enabled = true },
     statuscolumn = { enabled = true },

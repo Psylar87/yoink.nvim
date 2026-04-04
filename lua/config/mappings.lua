@@ -2,7 +2,6 @@
 -- Mapping Configuration
 --------------------------------------------------------------------------------
 local map = vim.keymap.set
-local opts = { noremap = true, silent = true }
 
 --------------------------------------------------------------------------------
 -- Plugin Manager
@@ -46,10 +45,10 @@ map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Window Resizing
-map('n', '<C-Up>', ':resize -2<CR>', opts)
-map('n', '<C-Down>', ':resize +2<CR>', opts)
-map('n', '<C-Left>', ':vertical resize -2<CR>', opts)
-map('n', '<C-Right>', ':vertical resize +2<CR>', opts)
+map('n', '<C-Up>', ':resize -2<CR>', { desc = 'Resize window up' })
+map('n', '<C-Down>', ':resize +2<CR>', { desc = 'Resize window down' })
+map('n', '<C-Left>', ':vertical resize -2<CR>', { desc = 'Resize window narrower' })
+map('n', '<C-Right>', ':vertical resize +2<CR>', { desc = 'Resize window wider' })
 
 -- Better indenting
 map('v', '<', '<gv', { desc = 'Indent left and keep selection' })
@@ -83,35 +82,35 @@ end, { desc = 'Go to next [D]iagnostic message' })
 --------------------------------------------------------------------------------
 -- Nvim-tree Mappings
 --------------------------------------------------------------------------------
-map('n', '<C-f>', '<cmd>NvimTreeToggle<CR>', { desc = 'Nvimtree Toggle window' })
-map('n', '<leader>nt', '<cmd>NvimTreeFocus<CR>', { desc = 'Nvimtree Focus window' })
-map('n', '<leader>nf', '<cmd>NvimTreeFindFile<CR>', { desc = 'Nvimtree Find current file' })
+map('n', '<C-f>', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle NvimTree window' })
+map('n', '<leader>nt', '<cmd>NvimTreeFocus<CR>', { desc = 'Focus NvimTree window' })
+map('n', '<leader>nf', '<cmd>NvimTreeFindFile<CR>', { desc = 'Find current file in NvimTree' })
 
 --------------------------------------------------------------------------------
 -- Buffer Management (Barbar)
 --------------------------------------------------------------------------------
 -- Navigation
-map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
-map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
-map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
-map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', { desc = 'Previous buffer' })
+map('n', '<A-.>', '<Cmd>BufferNext<CR>', { desc = 'Next buffer' })
+map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', { desc = 'Move buffer left' })
+map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', { desc = 'Move buffer right' })
 
 -- Buffer selection
 for i = 1, 9 do
-  map('n', string.format('<A-%s>', i), string.format('<Cmd>BufferGoto %s<CR>', i), opts)
+  map('n', string.format('<A-%s>', i), string.format('<Cmd>BufferGoto %s<CR>', i), { desc = string.format('Go to buffer %s', i) })
 end
-map('n', '<A-0>', '<Cmd>BufferLast<CR>', opts)
+map('n', '<A-0>', '<Cmd>BufferLast<CR>', { desc = 'Go to last buffer' })
 
 -- Buffer operations
-map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts)
-map('n', '<A-q>', '<Cmd>BufferClose<CR>', opts)
-map('n', '<C-p>', '<Cmd>BufferPick<CR>', opts)
+map('n', '<A-p>', '<Cmd>BufferPin<CR>', { desc = 'Pin buffer' })
+map('n', '<A-q>', '<Cmd>BufferClose<CR>', { desc = 'Close buffer' })
+map('n', '<C-p>', '<Cmd>BufferPick<CR>', { desc = 'Pick buffer' })
 
 -- Buffer sorting
-map('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', opts)
-map('n', '<leader>bod', '<Cmd>BufferOrderByDirectory<CR>', opts)
-map('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
-map('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
+map('n', '<leader>bb', '<Cmd>BufferOrderByBufferNumber<CR>', { desc = 'Sort buffers by number' })
+map('n', '<leader>bod', '<Cmd>BufferOrderByDirectory<CR>', { desc = 'Sort buffers by directory' })
+map('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', { desc = 'Sort buffers by language' })
+map('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', { desc = 'Sort buffers by window' })
 
 --------------------------------------------------------------------------------
 -- LSP Mappings (additional)
