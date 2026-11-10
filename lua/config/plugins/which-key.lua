@@ -47,10 +47,7 @@ return {
       },
 
       -- Mapping sort behavior
-      sort = {
-        enable = true, -- enable sorting
-        order = 'local', -- order mappings by 'local', 'group', or 'alpha'
-      },
+      sort = { 'local', 'order', 'group', 'alphanum', 'mod' },
 
       -- Group labels for key prefixes
       spec = {
@@ -66,7 +63,7 @@ return {
         { '<leader>b', group = '[B]uffers' },
         { '<leader>bo', group = 'Buffer [O]rder' },
         { '<leader>n', group = '[N]otifications' },
-        { '<leader>o', group = '[O]bsidian' },
+        { '<leader>o', group = '[O]bsidian', cond = require('config.platform').is_mac },
         { '<leader>y', group = '[Y]azi' },
         { '<leader>gl', group = 'Lazygit Log' },
 
@@ -75,11 +72,11 @@ return {
       },
 
       -- Ignore noisy contexts
-      ignore = {
+      disable = {
         -- Ignore specific buffer types
-        buftypes = { 'nofile', 'prompt', 'help' },
+        bt = { 'nofile', 'prompt' },
         -- Ignore specific filetypes
-        filetypes = { 'TelescopePrompt' },
+        ft = { 'TelescopePrompt', 'help' },
       },
 
       -- Built-in helper panels
@@ -103,10 +100,7 @@ return {
       },
 
       -- Prefix trigger timing
-      timeout = {
-        timeout = 300, -- timeout in ms
-        trigger_on_keys = true, -- automatically show menu when typing a prefix key
-      },
+      delay = 300,
     },
   },
 }

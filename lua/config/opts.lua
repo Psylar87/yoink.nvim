@@ -1,6 +1,6 @@
 -- UI capability flags
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = true
+vim.g.have_nerd_font = vim.g.have_nerd_font ~= false
 
 --------------------------------------------------------------------------------
 -- Performance Optimizations
@@ -36,7 +36,7 @@ vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 --------------------------------------------------------------------------------
 -- Mouse and clipboard
 vim.opt.mouse = 'a'
-vim.opt.clipboard = 'unnamedplus'
+require('config.clipboard').setup()
 
 -- Search settings
 vim.opt.ignorecase = true

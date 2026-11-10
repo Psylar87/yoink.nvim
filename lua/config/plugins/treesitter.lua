@@ -1,10 +1,12 @@
 return {
   {
     'nvim-treesitter/nvim-treesitter',
+    -- This configuration uses the legacy module API, not the main-branch rewrite.
+    branch = 'master',
     build = ':TSUpdate',
-    event = { 'BufReadPost', 'BufNewFile' },
+    lazy = false,
     dependencies = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
+      { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'master' },
       'windwp/nvim-ts-autotag',
       {
         'JoosepAlviste/nvim-ts-context-commentstring',

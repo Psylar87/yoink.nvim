@@ -23,17 +23,16 @@ A fun fork of [kickstart.nvim by MillerApps](https://github.com/nvim-lua/kicksta
 
 
 #### Why Fork?
-Forking the repo ensures you have a personal copy to modify at will. See [GitHub docs on forking][gh-fork-docs].
+Forking the repo ensures you have a personal copy to modify at will. See [GitHub docs on forking](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
 
-Replace `MillerApps/kickstart.nvim` with **your fork URL** if you fork the repo.
+Replace `Psylar87/yoink.nvim` with **your fork URL** if you fork the repo.
 
 > Q: I already have a Neovim config. What do I do?
 >
-> A: Back up your existing config, then remove it:
+> A: Back up your existing config:
 
 ```sh
 mv ~/.config/nvim ~/.config/nvim.old
-rm -rf ~/.local/share/nvim/
 ```
 
 > Q: Can I use multiple Neovim configs?
@@ -49,32 +48,121 @@ When you run `nvim-yoink`, it will use `~/.config/nvim-yoink` and `~/.local/shar
 
 ## Install Instructions
 
- > Install requires Neovim 0.11+. Always review the code before installing a configuration.
+Requires **Neovim 0.11.3+**. The current Mac setup is tested with **0.12.6**; use the same release on Proxmox initially. The Linux/SSH settings have simulated coverage on the Mac; the final terminal and tool checks must run on the server.
 
-Clone the repository and install the plugins:
+### Mac prerequisites
+
+Install the command-line developer tools (`xcode-select --install`) if needed, then install dependencies with Homebrew:
 
 ```sh
-git clone git@github.com:Psylar87/yoink.nvim.git ~/.config/nvim
+brew install neovim git ripgrep fd node python go yazi lazygit pngpaste imagemagick
 ```
 
-Open Neovim with this config:
+Install a current Rust toolchain with [rustup](https://rustup.rs/) if you use Rust or Clippy. Use a Nerd Font in your Mac terminal for the configured icons.
+
+### Proxmox host prerequisites
+
+Run the package commands as root on the Debian-based Proxmox host (or prefix them with `sudo` when available):
 
 ```sh
+apt update
+apt install -y git curl unzip tar gzip build-essential ripgrep fd-find nodejs npm python3 python3-venv python3-pip
+```
+
+Debian names the fd executable `fdfind`; Telescope supports it. Node/npm are used by servers and formatters such as Pyright and Prettierd. Python's venv support is needed for Mason's isolated Debugpy environment.
+
+Run the remaining commands as the account that will use Neovim. If the packaged Neovim is too old, install the selected official release in that account's home directory:
+
+```sh
+NVIM_VERSION=v0.12.6
+case "$(uname -m)" in
+  x86_64) NVIM_ARCH=x86_64 ;;
+  aarch64|arm64) NVIM_ARCH=arm64 ;;
+  *) printf 'Unsupported architecture: %s\n' "$(uname -m)"; exit 1 ;;
+esac
+mkdir -p "$HOME/.local/opt" "$HOME/.local/bin"
+curl -fL "https://github.com/neovim/neovim/releases/download/$NVIM_VERSION/nvim-linux-$NVIM_ARCH.tar.gz" \
+  -o "/tmp/nvim-linux-$NVIM_ARCH.tar.gz"
+tar -xzf "/tmp/nvim-linux-$NVIM_ARCH.tar.gz" -C "$HOME/.local/opt"
+ln -sfn "$HOME/.local/opt/nvim-linux-$NVIM_ARCH/bin/nvim" "$HOME/.local/bin/nvim"
+export PATH="$HOME/.local/bin:$PATH"
+nvim --version
+```
+
+Add `$HOME/.local/bin` to your shell's persistent `PATH`. Install current [Go](https://go.dev/doc/install) and [Rust](https://rustup.rs/) toolchains for Go/Rust development and building the optional utilities below. Check that your Node release meets the requirements reported by `:checkhealth mason`.
+
+Install Yazi and Lazygit using their [Yazi installation guide](https://yazi-rs.github.io/docs/installation/) and [Lazygit installation guide](https://github.com/jesseduffield/lazygit#installation), or build them with those toolchains:
+
+```sh
+cargo install --locked yazi-fm yazi-cli
+go install github.com/jesseduffield/lazygit@latest
+export PATH="$HOME/.cargo/bin:$HOME/go/bin:$PATH"
+```
+
+Persist those paths too, adjusting `$HOME/go/bin` if you use a custom `GOBIN` or `GOPATH`. Both `yazi` and its companion `ya` must be on `PATH`.
+
+### Install the shared configuration
+
+Back up an existing config first, then clone using HTTPS (no GitHub SSH key is needed):
+
+```sh
+git clone https://github.com/Psylar87/yoink.nvim.git ~/.config/nvim
 nvim
 ```
 
-If you want to run this config side-by-side with another setup:
+After Lazy finishes installing plugins, run these commands inside Neovim:
+
+```vim
+:MasonToolsInstall
+:TSUpdate
+```
+
+Wait for tool installation to finish, then restart Neovim. `:MasonToolsInstall` installs the configured language servers (including Lua), formatters, Debugpy, Delve, and CodeLLDB. `:Mason` shows installation status; `:MasonLog` explains installation failures. The general tool installer does not run automatically at startup; Mason's LSP integration can still install missing configured servers.
+
+Share this repository and `lazy-lock.json` between machines. Install plugins and Mason tools on each machine so their native binaries match its OS and CPU; do not copy the Mac's Neovim data directory to Linux. `:Lazy restore` restores the versions in the lockfile.
+
+For a side-by-side installation:
 
 ```sh
-git clone git@github.com:Psylar87/yoink.nvim.git ~/.config/nvim-yoink
+git clone https://github.com/Psylar87/yoink.nvim.git ~/.config/nvim-yoink
 NVIM_APPNAME=nvim-yoink nvim
 ```
+
+### Mac and Linux behavior
+
+| Feature | Mac | Proxmox over SSH |
+|---------|-----|------------------|
+| Obsidian | Existing iCloud `Dev` vault; local data-directory fallback if unavailable | Disabled, including shortcuts |
+| Text clipboard | Native macOS clipboard | OSC52 copying to the client terminal; cached text for Neovim puts |
+| Clipboard image paste | Enabled when `pngpaste` is installed | Disabled |
+| Image previews | Snacks terminal capability detection | Same detection; supported terminals can receive images over SSH |
+| Yazi directory shortcuts | Open the requested directory | Fall back to home if Desktop/Downloads/etc. is absent |
+
+Over SSH, yanking copies to your Mac clipboard **if your terminal supports and permits OSC52**. Use your Mac terminal's paste shortcut (usually `Cmd-V`) to insert newly copied Mac text. Normal Neovim `p`/`P` reuses the last text copied in that Neovim session; the configuration does not query your Mac clipboard. A custom `vim.g.clipboard` set before initialization takes precedence.
+
+Image previews require a compatible terminal such as Kitty or Ghostty; WezTerm support is limited. They are separate from image clipboard access. Set `vim.g.yoink_images = false` before initialization to disable previews. A Linux desktop session can enable image clipboard paste when its Wayland `wl-paste` or X11 `xclip` provider is present.
+
+Fonts are rendered by the terminal on your Mac, including over SSH. Set `vim.g.have_nerd_font = false` before initialization if that terminal does not use a Nerd Font; some explicitly configured decorative glyphs still require one.
 
 ## Startup / Loading Notes
 
 - Telescope and DAP load on demand from keys/commands (faster startup).
 - Gitsigns and Conform load when opening/creating files.
 - Mason tool installer no longer auto-runs at startup (`run_on_start = false`).
+- Treesitter and textobjects explicitly use the legacy `master` branches. The existing Neovim 0.12 compatibility guards remain: Markdown Treesitter highlighting, render-markdown, and document image previews are disabled on 0.12+. The legacy Treesitter branch is not officially supported upstream on 0.12; a migration to its rewritten API is a separate future change.
+- Format-on-save skips Markdown, plain text, and Git commit messages. Manual formatting uses Conform with LSP fallback; generic whitespace cleanup also skips Markdown.
+
+## Verification after installation
+
+On each machine, open representative Lua, Python, Go, and Rust projects and check:
+
+- `:checkhealth mason` and `:checkhealth vim.lsp` for dependencies and attached servers.
+- `:ConformInfo`, `<leader>f`, and saving a code file for formatter availability and behavior.
+- `<leader>sf` / `<leader>sg` for file search and grep, `<leader>-` for Yazi, and `<leader>gg` for Lazygit.
+- `<leader>bt` / `<leader>bc` for a breakpoint and debug launch in a supported project. Rust/C/C++ programs need a compiled debug build selected at launch.
+- `Alt-l` still moves a line right, including after invoking `:LuaOutput`.
+
+On the Mac, verify the Obsidian shortcuts and metadata on a test note, plus clipboard/image behavior. On Proxmox, verify that Obsidian shortcuts are absent, yank text and paste it into a Mac app, then copy text on the Mac and paste it into Neovim using the terminal. These SSH clipboard and graphics checks require your actual terminal session.
 
 ## Yoink Quick Start
 
@@ -89,7 +177,7 @@ Your "I just opened Neovim, let's go" keys:
 | `<leader>gg` | Open Lazygit |
 | `<leader>f` | Format current buffer |
 | `<leader>bd` | Delete buffer (mini.bufremove) |
-| `<leader>on` | New Obsidian note |
+| `<leader>on` | New Obsidian note (Mac only) |
 
 ## Keybindings
 
@@ -186,6 +274,8 @@ Your "I just opened Neovim, let's go" keys:
 | `<leader>gB` | Git browse (open in browser) |
 
 ### Obsidian
+Available on macOS only.
+
 | Key | Action |
 |-----|--------|
 | `<leader>of` | Search notes |
@@ -274,6 +364,11 @@ Your "I just opened Neovim, let's go" keys:
 |-----|--------|
 | `<leader>l` | Open Lazy |
 
+### LuaOutput
+| Key | Action |
+|-----|--------|
+| `<leader>xl` | Execute the current buffer as Lua and show its output |
+
 ## Plugins
 
 ### colorscheme
@@ -323,7 +418,7 @@ Your "I just opened Neovim, let's go" keys:
 
 ### media
 + [HakonHarnes/img-clip.nvim](https://dotfyle.com/plugins/HakonHarnes/img-clip.nvim)
-+ [3rd/image.nvim](https://dotfyle.com/plugins/3rd/image.nvim)
++ [folke/snacks.nvim](https://dotfyle.com/plugins/folke/snacks.nvim) (image previews)
 
 ### note-taking
 + [obsidian-nvim/obsidian.nvim](https://dotfyle.com/plugins/obsidian-nvim/obsidian.nvim)

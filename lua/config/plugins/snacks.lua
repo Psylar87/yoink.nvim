@@ -49,7 +49,9 @@ return {
       notify_end = true,
     },
     image = {
-      enabled = true,
+      -- Snacks detects graphics support, including image transfer over SSH.
+      enabled = vim.g.yoink_images ~= false,
+      force = false,
       doc = {
         enabled = not nvim_012_or_newer,
         inline = false,

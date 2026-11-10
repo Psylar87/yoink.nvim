@@ -1,6 +1,11 @@
 -- Track startup time
 local startup_time = vim.fn.reltime()
 
+if vim.fn.has 'nvim-0.11.3' == 0 then
+  vim.notify('Yoink.nvim requires Neovim 0.11.3 or newer.', vim.log.levels.ERROR)
+  return
+end
+
 local open_tree_on_start = vim.g.yoink_open_tree_on_start ~= false
 local notify_startup_time = vim.g.yoink_notify_startup_time ~= false
 
@@ -12,6 +17,7 @@ vim.g.maplocalleader = ' '
 if vim.fn.has 'nvim-0.12' == 1 and vim.treesitter and vim.treesitter.start then
   local treesitter_start = vim.treesitter.start
 
+  ---@diagnostic disable-next-line: duplicate-set-field -- Intentional compatibility wrapper.
   vim.treesitter.start = function(bufnr, lang)
     local target_buf = bufnr or 0
     if target_buf == 0 then

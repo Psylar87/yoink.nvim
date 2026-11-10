@@ -1,5 +1,6 @@
 local obsidian_config = {
   'obsidian-nvim/obsidian.nvim',
+  enabled = require('config.platform').is_mac,
   version = '*',
   ft = 'markdown',
   dependencies = {
@@ -9,11 +10,7 @@ local obsidian_config = {
     local obsidian_path = vim.fs.joinpath(vim.env.HOME, 'Library/Mobile Documents/iCloud~md~obsidian/Documents/Dev/')
     local fallback_path = vim.fs.joinpath(vim.fn.stdpath 'data', 'obsidian', 'Dev')
 
-    if not vim.uv.fs_stat(obsidian_path) then
-      pcall(vim.fn.mkdir, obsidian_path, 'p')
-    end
-
-    if not vim.uv.fs_stat(obsidian_path) then
+    if vim.fn.isdirectory(obsidian_path) == 0 then
       vim.notify('Obsidian iCloud path unavailable, using local fallback vault', vim.log.levels.WARN)
       if not vim.uv.fs_stat(fallback_path) then
         pcall(vim.fn.mkdir, fallback_path, 'p')
@@ -30,42 +27,37 @@ local obsidian_config = {
         },
       },
       completion = {
-        nvim_cmp = false,
         min_chars = 2,
       },
       picker = {
         name = 'telescope.nvim',
       },
       legacy_commands = false,
-      frontmatter_func = function(note)
-        local out = {
-          created = os.date '!%Y-%m-%d %H:%M:%S',
-          title = note.id,
-          aliases = note.aliases,
-          tags = note.tags,
-        }
-        if note.metadata ~= nil and next(note.metadata) ~= nil then
-          for k, v in pairs(note.metadata) do
+      frontmatter = {
+        func = function(note)
+          local out = {
+            id = note.id,
+            created = os.date '!%Y-%m-%d %H:%M:%S',
+            title = note.title or note.id,
+            aliases = note.aliases,
+            tags = note.tags,
+          }
+          for k, v in pairs(note.metadata or {}) do
             out[k] = v
           end
-        end
-        return out
-      end,
+          return out
+        end,
+      },
     }
   end,
   keys = {
-    { '<leader>of', '<cmd>ObsidianSearch<cr>', desc = 'Search files' },
-    { '<leader>os', '<cmd>ObsidianQuickSwitch<cr>', desc = 'Quick switch' },
-    { '<leader>on', '<cmd>ObsidianNew<cr>', desc = 'New note' },
-    { '<leader>ol', '<cmd>ObsidianFollowLink<cr>', desc = 'Follow link' },
-    { '<leader>ob', '<cmd>ObsidianBacklinks<cr>', desc = 'Show backlinks' },
-    { '<leader>ot', '<cmd>ObsidianTags<cr>', desc = 'Browse tags' },
+    { '<leader>of', '<cmd>Obsidian search<cr>', desc = 'Search files' },
+    { '<leader>os', '<cmd>Obsidian quick_switch<cr>', desc = 'Quick switch' },
+    { '<leader>on', '<cmd>Obsidian new<cr>', desc = 'New note' },
+    { '<leader>ol', '<cmd>Obsidian follow_link<cr>', desc = 'Follow link' },
+    { '<leader>ob', '<cmd>Obsidian backlinks<cr>', desc = 'Show backlinks' },
+    { '<leader>ot', '<cmd>Obsidian tags<cr>', desc = 'Browse tags' },
   },
-  config = function(_, opts)
-    -- Ensure opts is called if it's a function
-    local options = type(opts) == 'function' and opts() or opts
-    require('obsidian').setup(options)
-  end,
 }
 
 return obsidian_config

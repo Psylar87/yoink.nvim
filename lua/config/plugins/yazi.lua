@@ -1,3 +1,12 @@
+local function open_directory(path)
+  if vim.fn.isdirectory(path) == 0 then
+    vim.notify('Directory unavailable: ' .. path .. '; opening home instead', vim.log.levels.INFO)
+    path = vim.env.HOME
+  end
+  -- Pass the starting directory directly, preserving the editor's working directory.
+  require('yazi').yazi(nil, path)
+end
+
 return {
   ---@type LazyPluginSpec
   {
@@ -25,64 +34,45 @@ return {
       {
         '<leader>yh',
         function()
-          vim.cmd.lcd(vim.env.HOME)
-          vim.cmd 'Yazi cwd'
+          open_directory(vim.env.HOME)
         end,
         desc = 'Open yazi in home directory',
       },
       {
         '<leader>yn',
         function()
-          vim.cmd.lcd(vim.fn.stdpath 'config')
-          vim.cmd 'Yazi cwd'
+          open_directory(vim.fn.stdpath 'config')
         end,
         desc = 'Open yazi in neovim config directory',
       },
       {
         '<leader>yw',
         function()
-          vim.cmd.lcd(vim.fs.joinpath(vim.env.HOME, 'Downloads'))
-          vim.cmd 'Yazi cwd'
+          open_directory(vim.fs.joinpath(vim.env.HOME, 'Downloads'))
         end,
         desc = 'Open yazi in Downloads directory',
       },
       {
         '<leader>yk',
         function()
-          vim.cmd.lcd(vim.fs.joinpath(vim.env.HOME, 'Desktop'))
-          vim.cmd 'Yazi cwd'
+          open_directory(vim.fs.joinpath(vim.env.HOME, 'Desktop'))
         end,
         desc = 'Open yazi in Desktop directory',
       },
       {
         '<leader>yc',
         function()
-          vim.cmd.lcd(vim.fs.joinpath(vim.env.HOME, '.config'))
-          vim.cmd 'Yazi cwd'
+          open_directory(vim.fs.joinpath(vim.env.HOME, '.config'))
         end,
         desc = 'Open yazi in .config directory',
       },
     },
     opts = {
       open_for_directories = false,
-      popup = {
-        size = {
-          width = '90%',
-          height = '80%',
-        },
-        position = '50%',
-        border = 'rounded',
-      },
+      floating_window_scaling_factor = { width = 0.9, height = 0.8 },
+      yazi_floating_window_border = 'rounded',
       keymaps = {
         show_help = '<f1>',
-        parent_dir = 'h',
-        close = '<esc>',
-        refresh = '<c-r>',
-        toggle_hidden = '.',
-      },
-      preview = {
-        enabled = true,
-        show_line_numbers = true,
       },
     },
     init = function()

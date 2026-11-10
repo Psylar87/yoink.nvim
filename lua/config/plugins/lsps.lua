@@ -23,27 +23,6 @@ return {
       { 'j-hui/fidget.nvim', opts = {} },
     },
     config = function()
-      local function setup_server(server_name, server_config)
-        if vim.lsp.config and type(vim.lsp.enable) == 'function' then
-          local ok = pcall(vim.lsp.config, server_name, server_config)
-          if ok then
-            vim.lsp.enable(server_name)
-            return
-          end
-        end
-
-        if type(vim.lsp.enable) == 'function' and type(vim.lsp.config) == 'table' then
-          vim.lsp.config[server_name] = server_config
-          vim.lsp.enable(server_name)
-          return
-        end
-
-        local ok_lspconfig, lspconfig = pcall(require, 'lspconfig')
-        if ok_lspconfig and lspconfig[server_name] then
-          lspconfig[server_name].setup(server_config)
-        end
-      end
-
       ----------------------------------------------------------------------------
       --  Setup LSP-on-attach Keymappings
       ----------------------------------------------------------------------------
@@ -129,7 +108,7 @@ return {
         rust_analyzer = {
           settings = {
             ['rust-analyzer'] = {
-              checkOnSave = { command = 'clippy' },
+              check = { command = 'clippy' },
             },
           },
         },
@@ -186,6 +165,7 @@ return {
           'stylua',
           'debugpy',
           'delve',
+          'codelldb',
           'prettierd',
           'shfmt',
           'yamlfmt',
@@ -196,29 +176,14 @@ return {
         },
         auto_update = false,
         run_on_start = false,
-      }
-
-      require('mason-lspconfig').setup {
-        ensure_installed = vim.tbl_keys(servers),
-        automatic_enable = vim.tbl_keys(servers),
-        handlers = {
-          function(server_name)
-            if servers[server_name] == nil then
-              return
-            end
-
-            local server = servers[server_name] or {}
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            setup_server(server_name, server)
-          end,
-        },
+        -- Installing tools should not load the debugger and its UI at startup.
+        integrations = { ['mason-nvim-dap'] = false, ['mason-null-ls'] = false },
       }
 
       ----------------------------------------------------------------------------
       -- Lua LSP
       ----------------------------------------------------------------------------
-      setup_server('lua_ls', {
-        capabilities = capabilities,
+      servers.lua_ls = {
         on_init = function(client)
           local folder = client.workspace_folders and client.workspace_folders[1]
           local path = folder and folder.name
@@ -236,7 +201,20 @@ return {
           })
         end,
         settings = { Lua = {} },
-      })
+      }
+
+      -- Mason v2 no longer supports setup handlers. Configure before enabling servers.
+      for server_name, server in pairs(servers) do
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        vim.lsp.config(server_name, server)
+      end
+
+      require('mason-lspconfig').setup {
+        ensure_installed = vim.tbl_keys(servers),
+        automatic_enable = false,
+      }
+      -- Also supports servers installed outside Mason.
+      vim.lsp.enable(vim.tbl_keys(servers))
 
       ----------------------------------------------------------------------------
       -- Optional: Go test shortcut

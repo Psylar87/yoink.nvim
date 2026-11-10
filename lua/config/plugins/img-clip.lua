@@ -1,10 +1,13 @@
 return {
   'HakonHarnes/img-clip.nvim',
+  enabled = require('config.platform').has_image_clipboard(),
   event = 'VeryLazy',
   opts = {
     default = {
       dir_path = function()
-        return vim.fs.dirname(vim.api.nvim_buf_get_name(0)) .. '/images'
+        local name = vim.api.nvim_buf_get_name(0)
+        local directory = name ~= '' and vim.fs.dirname(name) or vim.fn.getcwd()
+        return vim.fs.joinpath(directory, 'images')
       end,
       extension = 'png',
       file_name = '%Y%m%d-%H%M%S',

@@ -113,11 +113,6 @@ map('n', '<leader>bl', '<Cmd>BufferOrderByLanguage<CR>', { desc = 'Sort buffers 
 map('n', '<leader>bw', '<Cmd>BufferOrderByWindowNumber<CR>', { desc = 'Sort buffers by window' })
 
 --------------------------------------------------------------------------------
--- LSP Mappings (additional)
---------------------------------------------------------------------------------
-map('n', '<leader>f', vim.lsp.buf.format, { desc = '[F]ormat code' })
-
---------------------------------------------------------------------------------
 -- Git Mappings (Gitsigns)
 --------------------------------------------------------------------------------
 map('n', '<leader>gb', '<cmd>Gitsigns toggle_current_line_blame<CR>', { desc = '[G]it [B]lame toggle' })

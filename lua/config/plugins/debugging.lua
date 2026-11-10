@@ -96,7 +96,8 @@ return {
 
     local ok_py, dap_python = pcall(require, 'dap-python')
     if ok_py then
-      dap_python.setup 'python'
+      -- Mason exposes this executable on both macOS and Linux, independently of project Python.
+      dap_python.setup 'debugpy-adapter'
     end
 
     local ok_vt, dap_vt = pcall(require, 'nvim-dap-virtual-text')
@@ -107,6 +108,14 @@ return {
     require('mason-nvim-dap').setup {
       ensure_installed = { 'python', 'delve', 'codelldb' },
       automatic_installation = true,
+      handlers = {
+        function(config)
+          require('mason-nvim-dap').default_setup(config)
+        end,
+        -- These plugins provide richer configurations than the generic Mason defaults.
+        python = function() end,
+        delve = function() end,
+      },
     }
 
     dap.listeners.before.attach.dapui_config = function()
