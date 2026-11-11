@@ -113,6 +113,7 @@ nvim
 After Lazy finishes installing plugins, run these commands inside Neovim:
 
 ```vim
+:Lazy restore
 :MasonToolsInstall
 :TSUpdate
 ```
@@ -121,7 +122,41 @@ Wait for tool installation to finish, then restart Neovim. `:MasonToolsInstall` 
 
 Share this repository and `lazy-lock.json` between machines. Install plugins and Mason tools on each machine so their native binaries match its OS and CPU; do not copy the Mac's Neovim data directory to Linux. `:Lazy restore` restores the versions in the lockfile.
 
-For a side-by-side installation:
+### Update an existing installation
+
+Close Neovim, then pull the shared configuration:
+
+```sh
+git -C ~/.config/nvim status --short
+git -C ~/.config/nvim pull --ff-only
+nvim
+```
+
+Preserve or commit local configuration edits before pulling. Inside Neovim, use `:Lazy restore` to deploy the committed plugin versions, followed by `:MasonToolsInstall` for any newly configured tools and `:TSUpdate` for parsers. `:Lazy sync` includes plugin updates and can rewrite the lockfile; reserve it for intentionally updating and testing plugin versions before sharing the resulting lockfile.
+
+### Recover a modified Yazi plugin checkout on Proxmox
+
+If Lazy reports local changes in `/root/.local/share/nvim/lazy/yazi.nvim`, inspect that checkout:
+
+```sh
+git -C ~/.local/share/nvim/lazy/yazi.nvim status --short
+git -C ~/.local/share/nvim/lazy/yazi.nvim diff --stat HEAD
+```
+
+For a clean reinstall, close Neovim first. The following commands assume the default config/data directories. They preserve the plugin checkout and current lockfile in a unique backup directory outside Lazy's managed plugin directory:
+
+```sh
+backup_dir="$(mktemp -d "$HOME/nvim-recovery.XXXXXXXX")"
+cp "$HOME/.config/nvim/lazy-lock.json" "$backup_dir/lazy-lock.json"
+mv "$HOME/.local/share/nvim/lazy/yazi.nvim" "$backup_dir/yazi.nvim"
+git -C "$HOME/.config/nvim" restore --source=HEAD -- lazy-lock.json
+printf 'Recovery backup: %s\n' "$backup_dir"
+nvim
+```
+
+Lazy installs the missing plugin when Neovim starts. Once that finishes, run `:Lazy restore`, then `:checkhealth yazi`. Check `yazi --version` and `ya --version` in the server shell as well: the Neovim plugin and these external programs are installed separately. The backup retains any plugin edits for inspection or recovery.
+
+### Side-by-side installation
 
 ```sh
 git clone https://github.com/Psylar87/yoink.nvim.git ~/.config/nvim-yoink
@@ -151,6 +186,7 @@ Fonts are rendered by the terminal on your Mac, including over SSH. Set `vim.g.h
 - Mason tool installer no longer auto-runs at startup (`run_on_start = false`).
 - Treesitter and textobjects explicitly use the legacy `master` branches. The existing Neovim 0.12 compatibility guards remain: Markdown Treesitter highlighting, render-markdown, and document image previews are disabled on 0.12+. The legacy Treesitter branch is not officially supported upstream on 0.12; a migration to its rewritten API is a separate future change.
 - Format-on-save skips Markdown, plain text, and Git commit messages. Manual formatting uses Conform with LSP fallback; generic whitespace cleanup also skips Markdown.
+- Go imports are organized on save through the attached `gopls` client. Server requests and commands have bounded waits; failures are reported as warnings and the file can still be saved.
 
 ## Verification after installation
 
@@ -161,8 +197,21 @@ On each machine, open representative Lua, Python, Go, and Rust projects and chec
 - `<leader>sf` / `<leader>sg` for file search and grep, `<leader>-` for Yazi, and `<leader>gg` for Lazygit.
 - `<leader>bt` / `<leader>bc` for a breakpoint and debug launch in a supported project. Rust/C/C++ programs need a compiled debug build selected at launch.
 - `Alt-l` still moves a line right, including after invoking `:LuaOutput`.
+- In a Go module, save a file with an unused import and a missing standard-library import; verify imports are corrected and the result builds.
+
+Compare `nvim --version`, `yazi --version`, and `ya --version` between machines when investigating differences. On Neovim 0.12+, refresh the language server with `:lsp restart`; on 0.11, use `:LspRestart`. View a diagnostic with `<leader>ee`.
 
 On the Mac, verify the Obsidian shortcuts and metadata on a test note, plus clipboard/image behavior. On Proxmox, verify that Obsidian shortcuts are absent, yank text and paste it into a Mac app, then copy text on the Mac and paste it into Neovim using the terminal. These SSH clipboard and graphics checks require your actual terminal session.
+
+### Focused Go regression checks
+
+From the configuration root, run:
+
+```sh
+nvim --headless -u NONE -i NONE -l tests/go.lua
+```
+
+These checks use in-memory buffers and simulated server responses to cover code-action request structure, workspace-edit encoding, both command response forms, command completion, disabled actions, and save-safe error handling. Actual `gopls` attachment and import organization should also be verified in a Go project on each machine.
 
 ## Yoink Quick Start
 
